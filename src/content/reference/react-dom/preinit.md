@@ -5,19 +5,19 @@ canary: true
 
 <Canary>
 
-The `preinit` function is currently only available in React's Canary and experimental channels. Learn more about [React's release channels here](/community/versioning-policy#all-release-channels).
+הפונקציה `preinit` זמינה כרגע רק בערוצי Canary ו-experimental של React. מידע נוסף ב-[ערוצי השחרור של React](/community/versioning-policy#all-release-channels).
 
 </Canary>
 
 <Note>
 
-[React-based frameworks](/learn/start-a-new-react-project) frequently handle resource loading for you, so you might not have to call this API yourself. Consult your framework's documentation for details.
+[Frameworks מבוססי React](/learn/start-a-new-react-project) מטפלים לעיתים קרובות בטעינת משאבים בשבילכם, אז ייתכן שלא תצטרכו לקרוא ל-API הזה בעצמכם. לפרטים, עיינו בתיעוד של ה-framework שלכם.
 
 </Note>
 
 <Intro>
 
-`preinit` lets you eagerly fetch and evaluate a stylesheet or external script.
+`preinit` מאפשרת להביא מראש ולהעריך stylesheet או סקריפט חיצוני.
 
 ```js
 preinit("https://example.com/script.js", {as: "style"});
@@ -33,7 +33,7 @@ preinit("https://example.com/script.js", {as: "style"});
 
 ### `preinit(href, options)` {/*preinit*/}
 
-To preinit a script or stylesheet, call the `preinit` function from `react-dom`.
+כדי לבצע preinit לסקריפט או stylesheet, קראו לפונקציה `preinit` מתוך `react-dom`.
 
 ```js
 import { preinit } from 'react-dom';
@@ -45,42 +45,42 @@ function AppRoot() {
 
 ```
 
-[See more examples below.](#usage)
+[ראו דוגמאות נוספות בהמשך.](#usage)
 
-The `preinit` function provides the browser with a hint that it should start downloading and executing the given resource, which can save time. Scripts that you `preinit` are executed when they finish downloading. Stylesheets that you preinit are inserted into the document, which causes them to go into effect right away.
+הפונקציה `preinit` מספקת לדפדפן רמז שכדאי להתחיל להוריד ולהריץ את המשאב הנתון, מה שיכול לחסוך זמן. סקריפטים שמבצעים להם `preinit` יורצו כשהורדתם תסתיים. Stylesheets שמבצעים להם preinit יוכנסו למסמך וייכנסו לפעולה מיד.
 
 #### Parameters {/*parameters*/}
 
-* `href`: a string. The URL of the resource you want to download and execute.
-* `options`: an object. It contains the following properties:
-  *  `as`: a required string. The type of resource. Its possible values are `script` and `style`.
-  * `precedence`: a string. Required with stylesheets. Says where to insert the stylesheet relative to others. Stylesheets with higher precedence can override those with lower precedence. The possible values are `reset`, `low`, `medium`, `high`. 
-  *  `crossOrigin`: a string. The [CORS policy](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) to use. Its possible values are `anonymous` and `use-credentials`. It is required when `as` is set to `"fetch"`.
-  *  `integrity`: a string. A cryptographic hash of the resource, to [verify its authenticity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
-  *  `nonce`: a string. A cryptographic [nonce to allow the resource](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) when using a strict Content Security Policy. 
-  *  `fetchPriority`: a string. Suggests a relative priority for fetching the resource. The possible values are `auto` (the default), `high`, and `low`.
+* `href`: מחרוזת. ה-URL של המשאב שברצונכם להוריד ולהריץ.
+* `options`: אובייקט. כולל את המאפיינים הבאים:
+  *  `as`: מחרוזת חובה. סוג המשאב. הערכים האפשריים: `script` ו-`style`.
+  * `precedence`: מחרוזת. חובה עבור stylesheets. מציינת איפה להכניס את ה-stylesheet ביחס לאחרים. stylesheets עם קדימות גבוהה יותר יכולים לעקוף כאלה עם קדימות נמוכה יותר. הערכים האפשריים: `reset`, `low`, `medium`, `high`.
+  *  `crossOrigin`: מחרוזת. [מדיניות CORS](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) לשימוש. הערכים האפשריים: `anonymous` ו-`use-credentials`. חובה כשהערך של `as` הוא `"fetch"`.
+  *  `integrity`: מחרוזת. hash קריפטוגרפי של המשאב לצורך [אימות אותנטיות](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
+  *  `nonce`: מחרוזת. [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) קריפטוגרפי שמאפשר את המשאב כשמשתמשים ב-Content Security Policy קשוחה.
+  *  `fetchPriority`: מחרוזת. מציעה עדיפות יחסית לטעינת המשאב. הערכים האפשריים: `auto` (ברירת מחדל), `high`, ו-`low`.
 
 #### Returns {/*returns*/}
 
-`preinit` returns nothing.
+`preinit` לא מחזירה דבר.
 
 #### Caveats {/*caveats*/}
 
-* Multiple calls to `preinit` with the same `href` have the same effect as a single call.
-* In the browser, you can call `preinit` in any situation: while rendering a component, in an effect, in an event handler, and so on.
-* In server-side rendering or when rendering Server Components, `preinit` only has an effect if you call it while rendering a component or in an async context originating from rendering a component. Any other calls will be ignored.
+* כמה קריאות ל-`preinit` עם אותו `href` משפיעות כמו קריאה אחת.
+* בדפדפן אפשר לקרוא ל-`preinit` בכל מצב: בזמן רינדור קומפוננטה, בתוך effect, בתוך event handler, וכן הלאה.
+* ברינדור צד שרת או ברינדור Server Components, ל-`preinit` יש השפעה רק אם קוראים לה בזמן רינדור קומפוננטה או בהקשר async שמקורו ברינדור קומפוננטה. קריאות אחרות ייחסמו.
 
 ---
 
-## Usage {/*usage*/}
+## שימוש {/*usage*/}
 
-### Preiniting when rendering {/*preiniting-when-rendering*/}
+### Preinit בזמן רינדור {/*preiniting-when-rendering*/}
 
-Call `preinit` when rendering a component if you know that it or its children will use a specific resource, and you're OK with the resource being evaluated and thereby taking effect immediately upon being downloaded.
+קראו ל-`preinit` בזמן רינדור קומפוננטה אם אתם יודעים שהיא או הילדים שלה ישתמשו במשאב ספציפי, ואם מקובל עליכם שהמשאב יוערך וייכנס לפעולה מיד כשהורדתו מסתיימת.
 
 <Recipes titleText="Examples of preiniting">
 
-#### Preiniting an external script {/*preiniting-an-external-script*/}
+#### Preinit לסקריפט חיצוני {/*preiniting-an-external-script*/}
 
 ```js
 import { preinit } from 'react-dom';
@@ -91,11 +91,11 @@ function AppRoot() {
 }
 ```
 
-If you want the browser to download the script but not to execute it right away, use [`preload`](/reference/react-dom/preload) instead. If you want to load an ESM module, use [`preinitModule`](/reference/react-dom/preinitModule).
+אם אתם רוצים שהדפדפן יוריד את הסקריפט אבל לא יריץ אותו מיד, השתמשו ב-[`preload`](/reference/react-dom/preload) במקום. אם רוצים לטעון מודול ESM, השתמשו ב-[`preinitModule`](/reference/react-dom/preinitModule).
 
 <Solution />
 
-#### Preiniting a stylesheet {/*preiniting-a-stylesheet*/}
+#### Preinit ל-stylesheet {/*preiniting-a-stylesheet*/}
 
 ```js
 import { preinit } from 'react-dom';
@@ -106,17 +106,17 @@ function AppRoot() {
 }
 ```
 
-The `precedence` option, which is required, lets you control the order of stylesheets within the document. Stylesheets with higher precedence can overrule those with lower precedence.
+האפשרות `precedence`, שהיא חובה, מאפשרת לשלוט בסדר של stylesheets בתוך המסמך. stylesheets עם קדימות גבוהה יותר יכולים לעקוף כאלה עם קדימות נמוכה יותר.
 
-If you want to download the stylesheet but not to insert it into the document right away, use [`preload`](/reference/react-dom/preload) instead.
+אם אתם רוצים להוריד את ה-stylesheet אבל לא להכניס אותו למסמך מיד, השתמשו ב-[`preload`](/reference/react-dom/preload) במקום.
 
 <Solution />
 
 </Recipes>
 
-### Preiniting in an event handler {/*preiniting-in-an-event-handler*/}
+### Preinit בתוך event handler {/*preiniting-in-an-event-handler*/}
 
-Call `preinit` in an event handler before transitioning to a page or state where external resources will be needed. This gets the process started earlier than if you call it during the rendering of the new page or state.
+קראו ל-`preinit` בתוך event handler לפני מעבר לעמוד או מצב שבהם יידרשו משאבים חיצוניים. כך התהליך מתחיל מוקדם יותר לעומת קריאה בזמן רינדור העמוד או המצב החדש.
 
 ```js
 import { preinit } from 'react-dom';

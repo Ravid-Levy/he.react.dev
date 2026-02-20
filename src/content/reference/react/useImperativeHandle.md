@@ -4,7 +4,7 @@ title: useImperativeHandle
 
 <Intro>
 
-`useImperativeHandle` is a React Hook that lets you customize the handle exposed as a [ref.](/learn/manipulating-the-dom-with-refs)
+`useImperativeHandle` הוא React Hook שמאפשר להתאים אישית את ה-handle שנחשף כ-[ref.](/learn/manipulating-the-dom-with-refs)
 
 ```js
 useImperativeHandle(ref, createHandle, dependencies?)
@@ -20,7 +20,7 @@ useImperativeHandle(ref, createHandle, dependencies?)
 
 ### `useImperativeHandle(ref, createHandle, dependencies?)` {/*useimperativehandle*/}
 
-Call `useImperativeHandle` at the top level of your component to customize the ref handle it exposes:
+קראו ל-`useImperativeHandle` ברמה העליונה של הקומפוננטה כדי להתאים אישית את ref handle שהיא חושפת:
 
 ```js
 import { forwardRef, useImperativeHandle } from 'react';
@@ -34,27 +34,27 @@ const MyInput = forwardRef(function MyInput(props, ref) {
   // ...
 ```
 
-[See more examples below.](#usage)
+[ראו דוגמאות נוספות בהמשך.](#usage)
 
 #### Parameters {/*parameters*/}
 
-* `ref`: The `ref` you received as the second argument from the [`forwardRef` render function.](/reference/react/forwardRef#render-function)
+* `ref`: ה-`ref` שקיבלתם כארגומנט השני מתוך [`forwardRef` render function.](/reference/react/forwardRef#render-function)
 
-* `createHandle`: A function that takes no arguments and returns the ref handle you want to expose. That ref handle can have any type. Usually, you will return an object with the methods you want to expose.
+* `createHandle`: פונקציה שלא מקבלת ארגומנטים ומחזירה את ref handle שתרצו לחשוף. ה-handle הזה יכול להיות מכל סוג. בדרך כלל תחזירו אובייקט עם המתודות שתרצו לחשוף.
 
-* **optional** `dependencies`: The list of all reactive values referenced inside of the `createHandle` code. Reactive values include props, state, and all the variables and functions declared directly inside your component body. If your linter is [configured for React](/learn/editor-setup#linting), it will verify that every reactive value is correctly specified as a dependency. The list of dependencies must have a constant number of items and be written inline like `[dep1, dep2, dep3]`. React will compare each dependency with its previous value using the [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) comparison. If a re-render resulted in a change to some dependency, or if you omitted this argument, your `createHandle` function will re-execute, and the newly created handle will be assigned to the ref.
+* **אופציונלי** `dependencies`: רשימה של כל הערכים הריאקטיביים שמופנים בתוך קוד ה-`createHandle`. ערכים ריאקטיביים כוללים props, state וכל המשתנים והפונקציות שמוגדרים ישירות בתוך גוף הקומפוננטה. אם ה-linter שלכם [מוגדר ל-React](/learn/editor-setup#linting), הוא יוודא שכל ערך ריאקטיבי מצוין נכון כ-dependency. רשימת ה-dependencies חייבת להיות במספר פריטים קבוע ולהיכתב inline כמו `[dep1, dep2, dep3]`. React תשווה כל dependency לערך הקודם שלו באמצעות [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is). אם re-render גרם לשינוי ב-dependency כלשהו, או אם השמטתם את הארגומנט הזה, פונקציית `createHandle` תרוץ מחדש, וה-handle החדש שייווצר יוקצה ל-ref.
 
 #### Returns {/*returns*/}
 
-`useImperativeHandle` returns `undefined`.
+`useImperativeHandle` מחזיר `undefined`.
 
 ---
 
-## Usage {/*usage*/}
+## שימוש {/*usage*/}
 
-### Exposing a custom ref handle to the parent component {/*exposing-a-custom-ref-handle-to-the-parent-component*/}
+### חשיפת ref handle מותאם לקומפוננטת ההורה {/*exposing-a-custom-ref-handle-to-the-parent-component*/}
 
-By default, components don't expose their DOM nodes to parent components. For example, if you want the parent component of `MyInput` to [have access](/learn/manipulating-the-dom-with-refs) to the `<input>` DOM node, you have to opt in with [`forwardRef`:](/reference/react/forwardRef)
+כברירת מחדל, קומפוננטות לא חושפות את ה-DOM nodes שלהן לקומפוננטות הורה. למשל, אם אתם רוצים שלקומפוננטת ההורה של `MyInput` תהיה [גישה](/learn/manipulating-the-dom-with-refs) ל-`<input>` DOM node, צריך לבצע opt-in עם [`forwardRef`:](/reference/react/forwardRef)
 
 ```js {4}
 import { forwardRef } from 'react';
@@ -64,7 +64,7 @@ const MyInput = forwardRef(function MyInput(props, ref) {
 });
 ```
 
-With the code above, [a ref to `MyInput` will receive the `<input>` DOM node.](/reference/react/forwardRef#exposing-a-dom-node-to-the-parent-component) However, you can expose a custom value instead. To customize the exposed handle, call `useImperativeHandle` at the top level of your component:
+עם הקוד למעלה, [ref ל-`MyInput` יקבל את `<input>` DOM node.](/reference/react/forwardRef#exposing-a-dom-node-to-the-parent-component) אבל אפשר גם לחשוף ערך מותאם אישית במקום. כדי להתאים את ה-handle שנחשף, קראו ל-`useImperativeHandle` ברמה העליונה של הקומפוננטה:
 
 ```js {4-8}
 import { forwardRef, useImperativeHandle } from 'react';
@@ -80,9 +80,9 @@ const MyInput = forwardRef(function MyInput(props, ref) {
 });
 ```
 
-Note that in the code above, the `ref` is no longer forwarded to the `<input>`.
+שימו לב שבקוד למעלה, ה-`ref` כבר לא מועבר ל-`<input>`.
 
-For example, suppose you don't want to expose the entire `<input>` DOM node, but you want to expose two of its methods: `focus` and `scrollIntoView`. To do this, keep the real browser DOM in a separate ref. Then use `useImperativeHandle` to expose a handle with only the methods that you want the parent component to call:
+לדוגמה, נניח שאתם לא רוצים לחשוף את כל `<input>` DOM node, אלא רק שתי מתודות: `focus` ו-`scrollIntoView`. כדי לעשות זאת, שמרו את ה-DOM האמיתי של הדפדפן ב-ref נפרד. אחר כך השתמשו ב-`useImperativeHandle` כדי לחשוף handle שמכיל רק את המתודות שאתם רוצים שההורה יוכל לקרוא להן:
 
 ```js {7-14}
 import { forwardRef, useRef, useImperativeHandle } from 'react';
@@ -105,7 +105,7 @@ const MyInput = forwardRef(function MyInput(props, ref) {
 });
 ```
 
-Now, if the parent component gets a ref to `MyInput`, it will be able to call the `focus` and `scrollIntoView` methods on it. However, it will not have full access to the underlying `<input>` DOM node.
+עכשיו, אם קומפוננטת ההורה מקבלת ref ל-`MyInput`, היא תוכל לקרוא למתודות `focus` ו-`scrollIntoView`. עם זאת, לא תהיה לה גישה מלאה ל-`<input>` DOM node עצמו.
 
 <Sandpack>
 
@@ -166,9 +166,9 @@ input {
 
 ---
 
-### Exposing your own imperative methods {/*exposing-your-own-imperative-methods*/}
+### חשיפת מתודות imperative משלכם {/*exposing-your-own-imperative-methods*/}
 
-The methods you expose via an imperative handle don't have to match the DOM methods exactly. For example, this `Post` component exposes a `scrollAndFocusAddComment` method via an imperative handle. This lets the parent `Page` scroll the list of comments *and* focus the input field when you click the button:
+המתודות שאתם חושפים דרך imperative handle לא חייבות להתאים בדיוק למתודות DOM. לדוגמה, קומפוננטת `Post` הזו חושפת מתודה בשם `scrollAndFocusAddComment` דרך imperative handle. זה מאפשר ל-`Page` ההורה לגלול את רשימת התגובות *וגם* לפקס את שדה הקלט כשאתם לוחצים על הכפתור:
 
 <Sandpack>
 
@@ -281,8 +281,8 @@ export default AddComment;
 
 <Pitfall>
 
-**Do not overuse refs.** You should only use refs for *imperative* behaviors that you can't express as props: for example, scrolling to a node, focusing a node, triggering an animation, selecting text, and so on.
+**אל תשתמשו ב-refs מעבר לנדרש.** כדאי להשתמש ב-refs רק להתנהגויות *imperative* שלא ניתן לבטא כ-props: למשל גלילה ל-node, פוקוס ל-node, הפעלת אנימציה, בחירת טקסט, וכן הלאה.
 
-**If you can express something as a prop, you should not use a ref.** For example, instead of exposing an imperative handle like `{ open, close }` from a `Modal` component, it is better to take `isOpen` as a prop like `<Modal isOpen={isOpen} />`. [Effects](/learn/synchronizing-with-effects) can help you expose imperative behaviors via props.
+**אם אפשר לבטא משהו כ-prop, לא כדאי להשתמש ב-ref.** לדוגמה, במקום לחשוף imperative handle כמו `{ open, close }` מתוך קומפוננטת `Modal`, עדיף לקבל `isOpen` כ-prop כמו `<Modal isOpen={isOpen} />`. [Effects](/learn/synchronizing-with-effects) יכולות לעזור לחשוף התנהגויות imperative דרך props.
 
 </Pitfall>

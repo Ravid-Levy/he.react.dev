@@ -1,5 +1,5 @@
 ---
-title: Updating Objects in State
+title: עדכון אובייקטים ב-State
 ---
 
 <Intro>
@@ -441,7 +441,7 @@ input { margin-left: 5px; margin-bottom: 5px; }
 
 </Sandpack>
 
-Here, `e.target.name` refers to the `name` property given to the `<input>` DOM element.
+Here, `e.target.name` refers to the `name` property given to the ``<input>`` DOM element.
 
 </DeepDive>
 
@@ -1622,3 +1622,4 @@ select { margin-bottom: 10px; }
 </Solution>
 
 </Challenges>
+

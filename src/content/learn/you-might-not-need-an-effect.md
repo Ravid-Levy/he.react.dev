@@ -1,5 +1,5 @@
 ---
-title: 'You Might Not Need an Effect'
+title: אולי לא צריך Effect
 ---
 
 <Intro>
@@ -1736,3 +1736,4 @@ Notice how in this version, only _submitting the form_ (which is an event) cause
 </Solution>
 
 </Challenges>
+

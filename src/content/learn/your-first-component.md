@@ -1,5 +1,5 @@
 ---
-title: Your First Component
+title: הקומפוננטה הראשונה שלכם
 ---
 
 <Intro>
@@ -18,7 +18,7 @@ title: Your First Component
 
 ## Components: UI building blocks {/*components-ui-building-blocks*/}
 
-On the Web, HTML lets us create rich structured documents with its built-in set of tags like `<h1>` and `<li>`:
+On the Web, HTML lets us create rich structured documents with its built-in set of tags like ``<h1>`` and ``<li>``:
 
 ```html
 <article>
@@ -31,9 +31,9 @@ On the Web, HTML lets us create rich structured documents with its built-in set 
 </article>
 ```
 
-This markup represents this article `<article>`, its heading `<h1>`, and an (abbreviated) table of contents as an ordered list `<ol>`. Markup like this, combined with CSS for style, and JavaScript for interactivity, lies behind every sidebar, avatar, modal, dropdown—every piece of UI you see on the Web.
+This markup represents this article `<article>`, its heading ``<h1>``, and an (abbreviated) table of contents as an ordered list ``<ol>``. Markup like this, combined with CSS for style, and JavaScript for interactivity, lies behind every sidebar, avatar, modal, dropdown—every piece of UI you see on the Web.
 
-React lets you combine your markup, CSS, and JavaScript into custom "components", **reusable UI elements for your app.** The table of contents code you saw above could be turned into a `<TableOfContents />` component you could render on every page. Under the hood, it still uses the same HTML tags like `<article>`, `<h1>`, etc.
+React lets you combine your markup, CSS, and JavaScript into custom "components", **reusable UI elements for your app.** The table of contents code you saw above could be turned into a `<TableOfContents />` component you could render on every page. Under the hood, it still uses the same HTML tags like `<article>`, ``<h1>``, etc.
 
 Just like with HTML tags, you can compose, order and nest components to design whole pages. For example, the documentation page you're reading is made out of React components:
 
@@ -156,7 +156,7 @@ img { margin: 0 10px 10px 0; height: 90px; }
 
 Notice the difference in casing:
 
-* `<section>` is lowercase, so React knows we refer to an HTML tag.
+* ``<section>`` is lowercase, so React knows we refer to an HTML tag.
 * `<Profile />` starts with a capital `P`, so React knows that we want to use our component called `Profile`.
 
 And `Profile` contains even more HTML: `<img />`. In the end, this is what the browser sees:
@@ -431,7 +431,7 @@ img { margin: 0 10px 10px 0; }
 
 #### Your own component {/*your-own-component*/}
 
-Write a component from scratch. You can give it any valid name and return any markup. If you're out of ideas, you can write a `Congratulations` component that shows `<h1>Good job!</h1>`. Don't forget to export it!
+Write a component from scratch. You can give it any valid name and return any markup. If you're out of ideas, you can write a `Congratulations` component that shows ``<h1>`Good job!`</h1>``. Don't forget to export it!
 
 <Sandpack>
 
@@ -459,3 +459,4 @@ export default function Congratulations() {
 </Solution>
 
 </Challenges>
+

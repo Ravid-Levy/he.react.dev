@@ -1,68 +1,68 @@
 ---
-title: "The Plan for React 18"
+title: "התוכנית ל-React 18"
 ---
 
-June 8, 2021 by [Andrew Clark](https://twitter.com/acdlite), [Brian Vaughn](https://github.com/bvaughn), [Christine Abernathy](https://twitter.com/abernathyca), [Dan Abramov](https://twitter.com/dan_abramov), [Rachel Nabors](https://twitter.com/rachelnabors), [Rick Hanlon](https://twitter.com/rickhanlonii), [Sebastian Markbåge](https://twitter.com/sebmarkbage), and [Seth Webster](https://twitter.com/sethwebster)
+8 ביוני 2021 מאת [Andrew Clark](https://twitter.com/acdlite), [Brian Vaughn](https://github.com/bvaughn), [Christine Abernathy](https://twitter.com/abernathyca), [Dan Abramov](https://twitter.com/dan_abramov), [Rachel Nabors](https://twitter.com/rachelnabors), [Rick Hanlon](https://twitter.com/rickhanlonii), [Sebastian Markbåge](https://twitter.com/sebmarkbage), and [Seth Webster](https://twitter.com/sethwebster)
 
 ---
 
 <Intro>
 
-The React team is excited to share a few updates:
+צוות React שמח לשתף כמה עדכונים:
 
-1. We’ve started work on the React 18 release, which will be our next major version.
-2. We’ve created a Working Group to prepare the community for gradual adoption of new features in React 18.
-3. We’ve published a React 18 Alpha so that library authors can try it and provide feedback.
+1. התחלנו לעבוד על React 18, שתהיה גרסת ה-major הבאה שלנו.
+2. הקמנו Working Group כדי להכין את הקהילה לאימוץ הדרגתי של יכולות חדשות ב-React 18.
+3. פרסמנו React 18 Alpha כדי שמחברי ספריות יוכלו לנסות ולתת משוב.
 
-These updates are primarily aimed at maintainers of third-party libraries. If you’re learning, teaching, or using React to build user-facing applications, you can safely ignore this post. But you are welcome to follow the discussions in the React 18 Working Group if you're curious!
+העדכונים האלה מיועדים בעיקר למתחזקי ספריות צד שלישי. אם אתם לומדים, מלמדים או משתמשים ב-React לבניית אפליקציות למשתמשי קצה, אפשר להתעלם בבטחה מהפוסט הזה. אבל אתם בהחלט מוזמנים לעקוב אחרי הדיונים ב-React 18 Working Group אם זה מסקרן אתכם.
 
 ---
 
 </Intro>
 
-## What’s coming in React 18 {/*whats-coming-in-react-18*/}
+## מה מגיע ב-React 18 {/*whats-coming-in-react-18*/}
 
-When it’s released, React 18 will include out-of-the-box improvements (like [automatic batching](https://github.com/reactwg/react-18/discussions/21)), new APIs (like [`startTransition`](https://github.com/reactwg/react-18/discussions/41)), and a [new streaming server renderer](https://github.com/reactwg/react-18/discussions/37) with built-in support for `React.lazy`.
+כשתשוחרר, React 18 תכלול שיפורים מובנים (כמו [automatic batching](https://github.com/reactwg/react-18/discussions/21)), APIs חדשים (כמו [`startTransition`](https://github.com/reactwg/react-18/discussions/41)), וגם [renderer חדש לשרת בסטרימינג](https://github.com/reactwg/react-18/discussions/37) עם תמיכה מובנית ב-`React.lazy`.
 
-These features are possible thanks to a new opt-in mechanism we’re adding in React 18. It’s called “concurrent rendering” and it lets React prepare multiple versions of the UI at the same time. This change is mostly behind-the-scenes, but it unlocks new possibilities to improve both real and perceived performance of your app.
+היכולות האלה מתאפשרות בזכות מנגנון opt-in חדש שאנחנו מוסיפים ב-React 18. קוראים לו "concurrent rendering", והוא מאפשר ל-React להכין כמה גרסאות של ה-UI בו-זמנית. זה שינוי שמתרחש בעיקר מאחורי הקלעים, אבל הוא פותח אפשרויות חדשות לשיפור גם הביצועים בפועל וגם חוויית המהירות הנתפסת של האפליקציה.
 
-If you've been following our research into the future of React (we don't expect you to!), you might have heard of something called “concurrent mode” or that it might break your app. In response to this feedback from the community, we’ve redesigned the upgrade strategy for gradual adoption. Instead of an all-or-nothing “mode”, concurrent rendering will only be enabled for updates triggered by one of the new features. In practice, this means **you will be able to adopt React 18 without rewrites and try the new features at your own pace.**
+אם עקבתם אחרי המחקר שלנו לגבי עתיד React (אנחנו לא מצפים שכן), אולי שמעתם על משהו שנקרא "concurrent mode" או שהוא עלול לשבור את האפליקציה שלכם. בעקבות משוב כזה מהקהילה, עיצבנו מחדש את אסטרטגיית השדרוג כך שתתמוך באימוץ הדרגתי. במקום "mode" של הכול-או-כלום, concurrent rendering יופעל רק עבור עדכונים שמופעלים על ידי אחת היכולות החדשות. בפועל זה אומר ש-**תוכלו לאמץ את React 18 בלי כתיבה מחדש, ולנסות יכולות חדשות בקצב שלכם.**
 
-## A gradual adoption strategy {/*a-gradual-adoption-strategy*/}
+## אסטרטגיית אימוץ הדרגתית {/*a-gradual-adoption-strategy*/}
 
-Since concurrency in React 18 is opt-in, there are no significant out-of-the-box breaking changes to component behavior. **You can upgrade to React 18 with minimal or no changes to your application code, with a level of effort comparable to a typical major React release**. Based on our experience converting several apps to React 18, we expect that many users will be able to upgrade within a single afternoon.
+מכיוון ש-concurrency ב-React 18 הוא opt-in, אין שינויים שוברים משמעותיים בהתנהגות קומפוננטות כברירת מחדל. **אפשר לשדרג ל-React 18 עם מעט מאוד שינויים בקוד האפליקציה, או בלי שינויים בכלל, במאמץ דומה לשחרור major טיפוסי של React**. על סמך הניסיון שלנו בהסבת כמה אפליקציות ל-React 18, אנחנו מצפים שמשתמשים רבים יצליחו לשדרג תוך אחר צהריים אחד.
 
-We successfully shipped concurrent features to tens of thousands of components at Facebook, and in our experience, we've found that most React components “just work” without additional changes. We're committed to making sure this is a smooth upgrade for the entire community, so today we're announcing the React 18 Working Group.
+הוצאנו לפועל יכולות concurrent בעשרות אלפי קומפוננטות ב-Facebook, ובניסיון שלנו רוב קומפוננטות React "פשוט עובדות" בלי שינויים נוספים. אנחנו מחויבים לוודא שזה יהיה שדרוג חלק לכל הקהילה, ולכן אנחנו מכריזים היום על React 18 Working Group.
 
-## Working with the community {/*working-with-the-community*/}
+## עבודה עם הקהילה {/*working-with-the-community*/}
 
-We’re trying something new for this release: We've invited a panel of experts, developers, library authors, and educators from across the React community to participate in our [React 18 Working Group](https://github.com/reactwg/react-18) to provide feedback, ask questions, and collaborate on the release. We couldn't invite everyone we wanted to this initial, small group, but if this experiment works out, we hope there will be more in the future!
+בשחרור הזה אנחנו מנסים משהו חדש: הזמנו פאנל של מומחים, מפתחים, מחברי ספריות ומדריכים מכל קהילת React להשתתף ב-[React 18 Working Group](https://github.com/reactwg/react-18), לתת משוב, לשאול שאלות ולשתף פעולה סביב השחרור. לא הצלחנו להזמין את כל מי שרצינו לקבוצה הראשונית והקטנה הזו, אבל אם הניסוי יעבוד טוב אנחנו מקווים שיהיו עוד בהמשך.
 
-**The goal of the React 18 Working Group is to prepare the ecosystem for a smooth, gradual adoption of React 18 by existing applications and libraries.** The Working Group is hosted on [GitHub Discussions](https://github.com/reactwg/react-18/discussions) and is available for the public to read. Members of the working group can leave feedback, ask questions, and share ideas. The core team will also use the discussions repo to share our research findings. As the stable release gets closer, any important information will also be posted on this blog.
+**המטרה של React 18 Working Group היא להכין את האקו-סיסטם לאימוץ חלק והדרגתי של React 18 באפליקציות ובספריות קיימות.** ה-Working Group מתארח ב-[GitHub Discussions](https://github.com/reactwg/react-18/discussions), וכל הציבור יכול לקרוא אותו. חברי הקבוצה יכולים להשאיר משוב, לשאול שאלות ולשתף רעיונות. צוות הליבה גם ישתמש במאגר הדיונים כדי לשתף ממצאי מחקר. ככל שנתקרב לשחרור היציב, מידע חשוב יפורסם גם בבלוג הזה.
 
-For more information on upgrading to React 18, or additional resources about the release, see the [React 18 announcement post](https://github.com/reactwg/react-18/discussions/4).
+למידע נוסף על שדרוג ל-React 18 ומשאבים נוספים על השחרור, ראו את [פוסט ההכרזה על React 18](https://github.com/reactwg/react-18/discussions/4).
 
-## Accessing the React 18 Working Group {/*accessing-the-react-18-working-group*/}
+## גישה ל-React 18 Working Group {/*accessing-the-react-18-working-group*/}
 
-Everyone can read the discussions in the [React 18 Working Group repo](https://github.com/reactwg/react-18).
+כולם יכולים לקרוא את הדיונים ב-[מאגר React 18 Working Group](https://github.com/reactwg/react-18).
 
-Because we expect an initial surge of interest in the Working Group, only invited members will be allowed to create or comment on threads. However, the threads are fully visible to the public, so everyone has access to the same information. We believe this is a good compromise between creating a productive environment for working group members, while maintaining transparency with the wider community.
+מכיוון שאנחנו מצפים לגל עניין ראשוני, רק חברים מוזמנים יורשו ליצור או להגיב בשרשורים. עם זאת, השרשורים גלויים לגמרי לציבור, כך שלכולם יש גישה לאותו מידע. אנחנו מאמינים שזה איזון טוב בין יצירת סביבה פרודוקטיבית לחברי הקבוצה לבין שקיפות מלאה מול הקהילה הרחבה.
 
-As always, you can submit bug reports, questions, and general feedback to our [issue tracker](https://github.com/facebook/react/issues).
+כמו תמיד, אפשר לשלוח דיווחי באגים, שאלות ומשוב כללי ל-[issue tracker](https://github.com/facebook/react/issues) שלנו.
 
-## How to try React 18 Alpha today {/*how-to-try-react-18-alpha-today*/}
+## איך לנסות React 18 Alpha כבר היום {/*how-to-try-react-18-alpha-today*/}
 
-New alphas are [regularly published to npm using the `@alpha` tag](https://github.com/reactwg/react-18/discussions/9). These releases are built using the most recent commit to our main repo. When a feature or bugfix is merged, it will appear in an alpha the following weekday.
+גרסאות alpha חדשות [מתפרסמות באופן קבוע ל-npm עם התגית `@alpha`](https://github.com/reactwg/react-18/discussions/9). הגרסאות האלה נבנות מהקומיט האחרון במאגר הראשי שלנו. כשיכולת או תיקון באג מתמזגים, הם יופיעו ב-alpha ביום העבודה הבא.
 
-There may be significant behavioral or API changes between alpha releases. Please remember that **alpha releases are not recommended for user-facing, production applications**.
+ייתכנו שינויים משמעותיים בהתנהגות או ב-API בין שחרורי alpha. חשוב לזכור ש-**שחרורי alpha לא מומלצים לאפליקציות ייצור מול משתמשים.**
 
-## Projected React 18 release timeline {/*projected-react-18-release-timeline*/}
+## לוח זמנים משוער לשחרור React 18 {/*projected-react-18-release-timeline*/}
 
-We don't have a specific release date scheduled, but we expect it will take several months of feedback and iteration before React 18 is ready for most production applications.
+אין לנו כרגע תאריך שחרור ספציפי, אבל אנחנו מצפים שיידרשו כמה חודשים של משוב ואיטרציה לפני ש-React 18 תהיה מוכנה לרוב אפליקציות הייצור.
 
-* Library Alpha: Available today
-* Public Beta: At least several months
-* Release Candidate (RC): At least several weeks after Beta
-* General Availability: At least several weeks after RC
+* Library Alpha: זמין היום
+* Public Beta: לפחות כמה חודשים
+* Release Candidate (RC): לפחות כמה שבועות אחרי Beta
+* General Availability: לפחות כמה שבועות אחרי RC
 
-More details about our projected release timeline are [available in the Working Group](https://github.com/reactwg/react-18/discussions/9). We'll post updates on this blog when we're closer to a public release.
+פרטים נוספים על לוח הזמנים המשוער [זמינים ב-Working Group](https://github.com/reactwg/react-18/discussions/9). נפרסם עדכונים בבלוג הזה כשנתקרב לשחרור ציבורי.

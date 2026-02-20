@@ -1,30 +1,30 @@
 ---
-title: 'Reusing Logic with Custom Hooks'
+title: "שימוש חוזר בלוגיקה עם ווים מותאמים"
 ---
 
 <Intro>
 
-React comes with several built-in Hooks like `useState`, `useContext`, and `useEffect`. Sometimes, you'll wish that there was a Hook for some more specific purpose: for example, to fetch data, to keep track of whether the user is online, or to connect to a chat room. You might not find these Hooks in React, but you can create your own Hooks for your application's needs.
+React מגיע עם כמה Hooks מובנים כמו `useState`, `useContext` ו-`useEffect`. לפעמים, תרצה שיהיה Hook למטרה ספציפית יותר: למשל, להביא נתונים, לעקוב אם המשתמש מחובר או להתחבר לחדר צ'אט. אולי לא תמצא את ה-Hooks ב-React, אבל אתה יכול ליצור Hooks משלך לצרכי היישום שלך.
 
 </Intro>
 
 <YouWillLearn>
 
-- What custom Hooks are, and how to write your own
-- How to reuse logic between components
-- How to name and structure your custom Hooks
-- When and why to extract custom Hooks
+- מה הם הHooks מותאמים אישית ואיך לכתוב בעצמך
+- כיצד לעשות שימוש חוזר בלוגיקה בין רכיבים
+- איך לתת שם ולבנות את הווים המותאמים אישית שלך
+- מתי ומדוע לחלץ ווים מותאמים אישית
 
 </YouWillLearn>
 
-## Custom Hooks: Sharing logic between components {/*custom-hooks-sharing-logic-between-components*/}
+## ווים מותאמים אישית: שיתוף היגיון בין רכיבים {/*custom-hooks-sharing-logic-between-components*/}
 
-Imagine you're developing an app that heavily relies on the network (as most apps do). You want to warn the user if their network connection has accidentally gone off while they were using your app. How would you go about it? It seems like you'll need two things in your component:
+תארו לעצמכם שאתם מפתחים אפליקציה שנשענת במידה רבה על הרשת (כמו שרוב האפליקציות עושות). אתה רוצה להזהיר את המשתמש אם חיבור הרשת שלו כבה בטעות בזמן שהוא השתמש באפליקציה שלך. איך היית מתנהלת? נראה שתצטרך שני דברים ברכיב שלך:
 
-1. A piece of state that tracks whether the network is online.
-2. An Effect that subscribes to the global [`online`](https://developer.mozilla.org/en-US/docs/Web/API/Window/online_event) and [`offline`](https://developer.mozilla.org/en-US/docs/Web/API/Window/offline_event) events, and updates that state.
+1. פיסת state שעוקבת אחר האם הרשת מקוונת.
+2. אפקט שנרשם לאירועים הגלובליים [`מקוון`](https://developer.mozilla.org/en-US/docs/Web/API/Window/online_event) ו-[`offline`](https://developer.mozilla.org/en-US/docs/Web/API/Window/offline_event).
 
-This will keep your component [synchronized](/learn/synchronizing-with-effects) with the network status. You might start with something like this:
+זה ישמור את הרכיב שלך [מסונכרן](/learn/synchronizing-with-effects) עם סטטוס הרשת. אתה יכול להתחיל עם משהו כזה:
 
 <Sandpack>
 
@@ -54,11 +54,11 @@ export default function StatusBar() {
 
 </Sandpack>
 
-Try turning your network on and off, and notice how this `StatusBar` updates in response to your actions.
+נסה להפעיל ולכבות את הרשת שלך, ושם לב כיצד 'סרגל הstate' הזה מתעדכן בתגובה לפעולות שלך.
 
-Now imagine you *also* want to use the same logic in a different component. You want to implement a Save button that will become disabled and show "Reconnecting..." instead of "Save" while the network is off.
+עכשיו דמיינו שאתם *גם* רוצים להשתמש באותו היגיון ברכיב אחר. ברצונך ליישם כפתור שמירה שיהפוך לבלתי זמין ויראה "מתחבר מחדש..." במקום "שמור" בזמן שהרשת כבויה.
 
-To start, you can copy and paste the `isOnline` state and the Effect into `SaveButton`:
+כדי להתחיל, אתה יכול להעתיק ולהדביק את מצב `isOnline` ואת האפקט לתוך `SaveButton`:
 
 <Sandpack>
 
@@ -96,13 +96,13 @@ export default function SaveButton() {
 
 </Sandpack>
 
-Verify that, if you turn off the network, the button will change its appearance.
+ודא שאם תכבה את הרשת, הכפתור ישנה את מראהו.
 
-These two components work fine, but the duplication in logic between them is unfortunate. It seems like even though they have different *visual appearance,* you want to reuse the logic between them.
+שני הרכיבים האלה עובדים מצוין, אבל הכפילות בלוגיקה ביניהם היא מצערת. נראה שלמרות שיש להם *מראה חזותי* שונה, אתה רוצה לעשות שימוש חוזר בהיגיון ביניהם.
 
-### Extracting your own custom Hook from a component {/*extracting-your-own-custom-hook-from-a-component*/}
+### חילוץ Hook מותאם אישית משלך מרכיב {/*חילוץ-שלך-מתאים-מותאם-אישית-מ-a-component*/}
 
-Imagine for a moment that, similar to [`useState`](/reference/react/useState) and [`useEffect`](/reference/react/useEffect), there was a built-in `useOnlineStatus` Hook. Then both of these components could be simplified and you could remove the duplication between them:
+תארו לעצמכם לרגע שבדומה ל-[`useState`](/reference/react/useState) ו-[`useEffect`](/reference/react/useEffect), היה Hook של `useOnlineStatus` מובנה. אז ניתן יהיה לפשט את שני הרכיבים הללו ולהסיר את הכפילות ביניהם:
 
 ```js {2,7}
 function StatusBar() {
@@ -125,7 +125,7 @@ function SaveButton() {
 }
 ```
 
-Although there is no such built-in Hook, you can write it yourself. Declare a function called `useOnlineStatus` and move all the duplicated code into it from the components you wrote earlier:
+למרות שאין Hook מובנה כזה, אתה יכול לכתוב את זה בעצמך. הכריז על פונקציה בשם `useOnlineStatus` והעבר לתוכה את כל הקוד המשוכפל מהרכיבים שכתבת קודם:
 
 ```js {2-16}
 function useOnlineStatus() {
@@ -148,7 +148,7 @@ function useOnlineStatus() {
 }
 ```
 
-At the end of the function, return `isOnline`. This lets your components read that value:
+בסוף הפונקציה, החזר `isOnline`. זה מאפשר לרכיבים שלך לקרוא את הערך הזה:
 
 <Sandpack>
 
@@ -209,36 +209,36 @@ export function useOnlineStatus() {
 
 </Sandpack>
 
-Verify that switching the network on and off updates both components.
+ודא כי הפעלה וכיבוי של הרשת מעדכנת את שני הרכיבים.
 
-Now your components don't have as much repetitive logic. **More importantly, the code inside them describes *what they want to do* (use the online status!) rather than *how to do it* (by subscribing to the browser events).**
+כעת לרכיבים שלך אין כל כך הרבה היגיון חוזר. **חשוב מכך, הקוד בתוכם מתאר *מה הם רוצים לעשות* (השתמשו בסטטוס המקוון!) במקום *איך לעשות זאת* (על ידי הרשמה לאירועי הדפדפן).**
 
-When you extract logic into custom Hooks, you can hide the gnarly details of how you deal with some external system or a browser API. The code of your components expresses your intent, not the implementation.
+כאשר אתה מחלץ היגיון לתוך Hooks מותאמים אישית, אתה יכול להסתיר את הפרטים המסובכים של איך אתה מתמודד עם מערכת חיצונית כלשהי או API של דפדפן. הקוד של הרכיבים שלך מבטא את כוונתך, לא את היישום.
 
-### Hook names always start with `use` {/*hook-names-always-start-with-use*/}
+### שמות Hook תמיד מתחילים ב-`use` {/*hook-names-always-start-with-use*/}
 
-React applications are built from components. Components are built from Hooks, whether built-in or custom. You'll likely often use custom Hooks created by others, but occasionally you might write one yourself!
+יישומי React בנויים מרכיבים. רכיבים בנויים מ-Hooks, בין אם מובנים או מותאמים אישית. סביר להניח שלעתים קרובות תשתמש ב-Hooks מותאמים אישית שנוצרו על ידי אחרים, אבל לפעמים אתה עשוי לכתוב אחד בעצמך!
 
-You must follow these naming conventions:
+עליך לפעול לפי מוסכמות השמות הבאות:
 
-1. **React component names must start with a capital letter,** like `StatusBar` and `SaveButton`. React components also need to return something that React knows how to display, like a piece of JSX.
-2. **Hook names must start with `use` followed by a capital letter,** like [`useState`](/reference/react/useState) (built-in) or `useOnlineStatus` (custom, like earlier on the page). Hooks may return arbitrary values.
+1. **שמות רכיבי React חייבים להתחיל באות גדולה,** כמו 'StatusBar' ו-'SaveButton'. רכיבי React צריכים גם להחזיר משהו שראקט יודע להציג, כמו חתיכת JSX.
+2. **שמות Hook חייבים להתחיל ב-`use` ואחריו באות גדולה,** כמו [`useState`](/reference/react/useState) (מובנה) או `useOnlineStatus` (מותאם אישית, כמו קודם בדף). הHooks עשויים להחזיר ערכים שרירותיים.
 
-This convention guarantees that you can always look at a component and know where its state, Effects, and other React features might "hide". For example, if you see a `getColor()` function call inside your component, you can be sure that it can't possibly contain React state inside because its name doesn't start with `use`. However, a function call like `useOnlineStatus()` will most likely contain calls to other Hooks inside!
+מוסכמה זו מבטיחה שתמיד תוכל להסתכל על רכיב ולדעת היכן מצבו, אפקטים ושאר תכונות React עשויות "להסתתר". לדוגמה, אם אתה רואה קריאה לפונקציה `getColor()` בתוך הרכיב שלך, אתה יכול להיות בטוח שהיא לא יכולה להכיל מצב React בפנים כי השם שלה לא מתחיל ב-`use`. עם זאת, קריאת פונקציה כמו `useOnlineStatus()` תכיל ככל הנראה קריאות ל-Hooks אחרים בפנים!
 
 <Note>
 
-If your linter is [configured for React,](/learn/editor-setup#linting) it will enforce this naming convention. Scroll up to the sandbox above and rename `useOnlineStatus` to `getOnlineStatus`. Notice that the linter won't allow you to call `useState` or `useEffect` inside of it anymore. Only Hooks and components can call other Hooks!
+אם ה-linter שלך הוא [מוגדר עבור React,](/learn/editor-setup#linting) הוא יאכוף את מוסכמות השמות הזו. גלול למעלה אל ארגז החול למעלה ושנה את השם של 'useOnlineStatus' ל'getOnlineStatus'. שימו לב שה-linter לא יאפשר לכם לקרוא 'useState' או 'useEffect' בתוכו יותר. רק הHooks ורכיבים יכולים לקרוא לHooks אחרים!
 
 </Note>
 
 <DeepDive>
 
-#### Should all functions called during rendering start with the use prefix? {/*should-all-functions-called-during-rendering-start-with-the-use-prefix*/}
+#### האם כל הפונקציות שנקראות במהלך העיבוד צריכות להתחיל בקידומת השימוש? {/*צריך-כל-הפונקציות-שנקראות-במהלך-רינדור-להתחיל-עם-the-use-prefix*/}
 
-No. Functions that don't *call* Hooks don't need to *be* Hooks.
+לא. פונקציות שלא *קוראות* לHooks לא צריכות *להיות* Hooks.
 
-If your function doesn't call any Hooks, avoid the `use` prefix. Instead, write it as a regular function *without* the `use` prefix. For example, `useSorted` below doesn't call Hooks, so call it `getSorted` instead:
+אם הפונקציה שלך לא קוראת לאף Hooks, הימנע מקידומת 'שימוש'. במקום זאת, כתוב אותה כפונקציה רגילה *ללא* הקידומת 'שימוש'. לדוגמה, 'useSorted' למטה לא קורא Hooks, אז קרא לזה 'getSorted' במקום זאת:
 
 ```js
 // 🔴 Avoid: A Hook that doesn't use Hooks
@@ -252,7 +252,7 @@ function getSorted(items) {
 }
 ```
 
-This ensures that your code can call this regular function anywhere, including conditions:
+זה מבטיח שהקוד שלך יכול לקרוא לפונקציה הרגילה הזו בכל מקום, כולל תנאים:
 
 ```js
 function List({ items, shouldSort }) {
@@ -265,7 +265,7 @@ function List({ items, shouldSort }) {
 }
 ```
 
-You should give `use` prefix to a function (and thus make it a Hook) if it uses at least one Hook inside of it:
+עליך לתת קידומת 'use' לפונקציה (ובכך להפוך אותה ל-Hook) אם היא משתמשת לפחות Hook אחד בתוכה:
 
 ```js
 // ✅ Good: A Hook that uses other Hooks
@@ -274,7 +274,7 @@ function useAuth() {
 }
 ```
 
-Technically, this isn't enforced by React. In principle, you could make a Hook that doesn't call other Hooks. This is often confusing and limiting so it's best to avoid that pattern. However, there may be rare cases where it is helpful. For example, maybe your function doesn't use any Hooks right now, but you plan to add some Hook calls to it in the future. Then it makes sense to name it with the `use` prefix:
+מבחינה טכנית, זה לא נאכף על ידי React. באופן עקרוני, אתה יכול לעשות Hook שלא קורא לHook אחרים. זה לעתים קרובות מבלבל ומגביל ולכן עדיף להימנע מהדפוס הזה. עם זאת, ייתכנו מקרים נדירים שבהם זה מועיל. לדוגמה, אולי הפונקציה שלך לא משתמשת באף Hooks כרגע, אבל אתה מתכנן להוסיף לה כמה שיחות Hook בעתיד. אז הגיוני לתת לזה שם עם הקידומת 'שימוש':
 
 ```js {3-4}
 // ✅ Good: A Hook that will likely use some other Hooks later
@@ -285,13 +285,13 @@ function useAuth() {
 }
 ```
 
-Then components won't be able to call it conditionally. This will become important when you actually add Hook calls inside. If you don't plan to use Hooks inside it (now or later), don't make it a Hook.
+אז רכיבים לא יוכלו לקרוא לזה מותנה. זה יהפוך חשוב כאשר אתה באמת מוסיף שיחות Hook פנימה. אם אינכם מתכננים להשתמש בHooks בתוכו (עכשיו או מאוחר יותר), אל תהפכו אותו לHook.
 
 </DeepDive>
 
-### Custom Hooks let you share stateful logic, not state itself {/*custom-hooks-let-you-share-stateful-logic-not-state-itself*/}
+### ווים מותאמים מאפשרים לך לשתף היגיון מצבי, לא להגדיר את עצמו {/*custom-hooks-let-you-share-stateful-logic-not-state-itself*/}
 
-In the earlier example, when you turned the network on and off, both components updated together. However, it's wrong to think that a single `isOnline` state variable is shared between them. Look at this code:
+בדוגמה הקודמת, כאשר הפעלת וכיבית את הרשת, שני הרכיבים עודכנו יחד. עם זאת, זה לא נכון לחשוב שמשתנה מצב 'isOnline' יחיד משותף ביניהם. תסתכל על הקוד הזה:
 
 ```js {2,7}
 function StatusBar() {
@@ -305,7 +305,7 @@ function SaveButton() {
 }
 ```
 
-It works the same way as before you extracted the duplication:
+זה עובד באותו אופן כמו לפני שחילצת את הכפילות:
 
 ```js {2-5,10-13}
 function StatusBar() {
@@ -325,9 +325,9 @@ function SaveButton() {
 }
 ```
 
-These are two completely independent state variables and Effects! They happened to have the same value at the same time because you synchronized them with the same external value (whether the network is on).
+אלו שני משתני מצב ואפקטים בלתי תלויים לחלוטין! במקרה היה להם אותו ערך בו-זמנית כי סינכרנתם אותם עם אותו ערך חיצוני (בין אם הרשת מופעלת).
 
-To better illustrate this, we'll need a different example. Consider this `Form` component:
+כדי להמחיש זאת טוב יותר, נצטרך דוגמה אחרת. שקול את רכיב ה'טופס' הזה:
 
 <Sandpack>
 
@@ -369,13 +369,13 @@ input { margin-left: 10px; }
 
 </Sandpack>
 
-There's some repetitive logic for each form field:
+יש היגיון שחוזר על עצמו עבור כל שדה טופס:
 
-1. There's a piece of state (`firstName` and `lastName`).
-1. There's a change handler (`handleFirstNameChange` and `handleLastNameChange`).
-1. There's a piece of JSX that specifies the `value` and `onChange` attributes for that input.
+1. יש פיסת state (`שם פרטי` ו`שם משפחה`).
+1. יש מטפל בשינוי (`handleFirstNameChange` ו-`handleLastNameChange`).
+1. יש קטע של JSX שמציין את התכונות 'ערך' ו-'onChange' עבור הקלט הזה.
 
-You can extract the repetitive logic into this `useFormInput` custom Hook:
+אתה יכול לחלץ את ההיגיון החוזר על ה-Hook המותאם אישית של 'useFormInput':
 
 <Sandpack>
 
@@ -428,9 +428,9 @@ input { margin-left: 10px; }
 
 </Sandpack>
 
-Notice that it only declares *one* state variable called `value`.
+שימו לב שהוא מכריז רק על משתנה מצב *אחד* בשם 'ערך'.
 
-However, the `Form` component calls `useFormInput` *two times:*
+עם זאת, הרכיב 'Form' קורא 'useFormInput' *פעמיים:*
 
 ```js
 function Form() {
@@ -439,17 +439,17 @@ function Form() {
   // ...
 ```
 
-This is why it works like declaring two separate state variables!
+זו הסיבה שזה עובד כמו הכרזה על שני משתני מצב נפרדים!
 
-**Custom Hooks let you share *stateful logic* but not *state itself.* Each call to a Hook is completely independent from every other call to the same Hook.** This is why the two sandboxes above are completely equivalent. If you'd like, scroll back up and compare them. The behavior before and after extracting a custom Hook is identical.
+**Custom Hooks מאפשרים לך לשתף *היגיון מצבי* אבל לא *לציין את עצמו.* כל קריאה ל-Hook עצמאית לחלוטין מכל קריאה אחרת לאותו Hook.** זו הסיבה ששתי ארגזי החול שלמעלה שוות לחלוטין. אם תרצה, גלול חזרה למעלה והשווה ביניהם. ההתנהגות לפני ואחרי חילוץ Hook מותאם אישית זהה.
 
-When you need to share the state itself between multiple components, [lift it up and pass it down](/learn/sharing-state-between-components) instead.
+כאשר אתה צריך לשתף את הstate עצמו בין רכיבים מרובים, [הרם אותו והעביר אותו למטה](/learn/sharing-state-between-components) במקום זאת.
 
-## Passing reactive values between Hooks {/*passing-reactive-values-between-hooks*/}
+## העברת ערכים תגובתיים בין Hooks {/*העברת-reactive-values-between-hooks*/}
 
-The code inside your custom Hooks will re-run during every re-render of your component. This is why, like components, custom Hooks [need to be pure.](/learn/keeping-components-pure) Think of custom Hooks' code as part of your component's body!
+הקוד בתוך Hooks המותאמים אישית שלך יפעל מחדש במהלך כל רינדור מחדש של הרכיב שלך. זו הסיבה, כמו רכיבים, Hooks מותאמים אישית [צריכים להיות טהורים.](/learn/keeping-components-pure) חשבו על הקוד המותאם אישית של Hooks כחלק מגוף הרכיב שלכם!
 
-Because custom Hooks re-render together with your component, they always receive the latest props and state. To see what this means, consider this chat room example. Change the server URL or the chat room:
+מכיוון שה-Hooks מותאמים אישית מעבדים מחדש יחד עם הרכיב שלך, הם תמיד מקבלים את הprops וstate העדכניים ביותר. כדי לראות מה זה אומר, שקול את הדוגמה הזו לחדר צ'אט. שנה את כתובת האתר של השרת או את חדר הצ'אט:
 
 <Sandpack>
 
@@ -599,9 +599,9 @@ button { margin-left: 10px; }
 
 </Sandpack>
 
-When you change `serverUrl` or `roomId`, the Effect ["reacts" to your changes](/learn/lifecycle-of-reactive-effects#effects-react-to-reactive-values) and re-synchronizes. You can tell by the console messages that the chat re-connects every time that you change your Effect's dependencies.
+כאשר אתה משנה `serverUrl` או `roomId`, האפקט ["מגיב" לשינויים שלך](/learn/lifecycle-of-reactive-effects#effects-react-to-reactive-values) ומסתנכרן מחדש. אתה יכול לראות לפי הודעות המסוף שהצ'אט מתחבר מחדש בכל פעם שאתה משנה את התלות של האפקט שלך.
 
-Now move the Effect's code into a custom Hook:
+כעת העבר את הקוד של האפקט ל-Hook מותאם אישית:
 
 ```js {2-13}
 export function useChatRoom({ serverUrl, roomId }) {
@@ -620,7 +620,7 @@ export function useChatRoom({ serverUrl, roomId }) {
 }
 ```
 
-This lets your `ChatRoom` component call your custom Hook without worrying about how it works inside:
+זה מאפשר לרכיב `ChatRoom` שלך לקרוא ל-Hook המותאם אישית שלך מבלי לדאוג איך זה עובד בפנים:
 
 ```js {4-7}
 export default function ChatRoom({ roomId }) {
@@ -643,9 +643,9 @@ export default function ChatRoom({ roomId }) {
 }
 ```
 
-This looks much simpler! (But it does the same thing.)
+זה נראה הרבה יותר פשוט! (אבל זה עושה את אותו הדבר.)
 
-Notice that the logic *still responds* to prop and state changes. Try editing the server URL or the selected room:
+שימו לב שההיגיון *עדיין מגיב* לשינויי תמיכה וstate. נסה לערוך את כתובת האתר של השרת או את החדר שנבחר:
 
 <Sandpack>
 
@@ -807,7 +807,7 @@ button { margin-left: 10px; }
 
 </Sandpack>
 
-Notice how you're taking the return value of one Hook:
+שים לב איך אתה לוקח את ערך ההחזר של Hook אחד:
 
 ```js {2}
 export default function ChatRoom({ roomId }) {
@@ -820,7 +820,7 @@ export default function ChatRoom({ roomId }) {
   // ...
 ```
 
-and pass it as an input to another Hook:
+והעבירו אותו כקלט לHook אחר:
 
 ```js {6}
 export default function ChatRoom({ roomId }) {
@@ -833,17 +833,17 @@ export default function ChatRoom({ roomId }) {
   // ...
 ```
 
-Every time your `ChatRoom` component re-renders, it passes the latest `roomId` and `serverUrl` to your Hook. This is why your Effect re-connects to the chat whenever their values are different after a re-render. (If you ever worked with audio or video processing software, chaining Hooks like this might remind you of chaining visual or audio effects. It's as if the output of `useState` "feeds into" the input of the `useChatRoom`.)
+בכל פעם שרכיב `ChatRoom` שלך מעבד מחדש, הוא מעביר את `roomId` ואת `serverUrl` העדכניים ביותר ל-Hook שלך. זו הסיבה שהאפקט שלך מתחבר מחדש לצ'אט בכל פעם שהערכים שלהם שונים לאחר עיבוד מחדש. (אם אי פעם עבדת עם תוכנת עיבוד אודיו או וידאו, שרשור Hooks כזה עשוי להזכיר לך שרשור אפקטים ויזואליים או אודיו. זה כאילו הפלט של `useState` "מוזן" לקלט של `useChatRoom`.)
 
-### Passing event handlers to custom Hooks {/*passing-event-handlers-to-custom-hooks*/}
+### העברת מטפלי אירועים ל-Hooks מותאמים אישית {/*passing-event-handlers-to-custom-hooks*/}
 
 <Wip>
 
-This section describes an **experimental API that has not yet been released** in a stable version of React.
+סעיף זה מתאר **API ניסיוני שעדיין לא שוחרר** בגרסה יציבה של React.
 
 </Wip>
 
-As you start using `useChatRoom` in more components, you might want to let components customize its behavior. For example, currently, the logic for what to do when a message arrives is hardcoded inside the Hook:
+ככל שתתחיל להשתמש ב-'useChatRoom' ברכיבים נוספים, אולי תרצה לאפשר לרכיבים להתאים אישית את ההתנהגות שלו. לדוגמה, נכון לעכשיו, ההיגיון של מה לעשות כשמגיעה הודעה מקודד בתוך ה-Hook:
 
 ```js {9-11}
 export function useChatRoom({ serverUrl, roomId }) {
@@ -862,7 +862,7 @@ export function useChatRoom({ serverUrl, roomId }) {
 }
 ```
 
-Let's say you want to move this logic back to your component:
+נניח שאתה רוצה להעביר את ההיגיון הזה בחזרה לרכיב שלך:
 
 ```js {7-9}
 export default function ChatRoom({ roomId }) {
@@ -878,7 +878,7 @@ export default function ChatRoom({ roomId }) {
   // ...
 ```
 
-To make this work, change your custom Hook to take `onReceiveMessage` as one of its named options:
+כדי לגרום לזה לעבוד, שנה את ה-Hook המותאם אישית שלך כדי לקחת את 'onReceiveMessage' כאחת מהאפשרויות הנקראות שלו:
 
 ```js {1,10,13}
 export function useChatRoom({ serverUrl, roomId, onReceiveMessage }) {
@@ -897,9 +897,9 @@ export function useChatRoom({ serverUrl, roomId, onReceiveMessage }) {
 }
 ```
 
-This will work, but there's one more improvement you can do when your custom Hook accepts event handlers.
+זה יעבוד, אבל יש עוד שיפור אחד שאתה יכול לעשות כאשר ה-Hook המותאם אישית שלך מקבל מטפלי אירועים.
 
-Adding a dependency on `onReceiveMessage` is not ideal because it will cause the chat to re-connect every time the component re-renders. [Wrap this event handler into an Effect Event to remove it from the dependencies:](/learn/removing-effect-dependencies#wrapping-an-event-handler-from-the-props)
+הוספת תלות ב-'onReceiveMessage' אינה אידיאלית מכיוון שהיא תגרום לצ'אט להתחבר מחדש בכל פעם שהרכיב מעבד מחדש. [עטפו את מטפל האירוע הזה לתוך אירוע אפקט כדי להסיר אותו מהתלות:](/learn/removing-effect-dependencies#wrapping-an-event-handler-from-the-props)
 
 ```js {1,4,5,15,18}
 import { useEffect, useEffectEvent } from 'react';
@@ -923,7 +923,7 @@ export function useChatRoom({ serverUrl, roomId, onReceiveMessage }) {
 }
 ```
 
-Now the chat won't re-connect every time that the `ChatRoom` component re-renders. Here is a fully working demo of passing an event handler to a custom Hook that you can play with:
+כעת הצ'אט לא יתחבר מחדש בכל פעם שרכיב `ChatRoom` מעבד מחדש. הנה הדגמה עובדת מלאה של העברת מטפל באירועים לHook מותאם אישית שתוכל לשחק איתו:
 
 <Sandpack>
 
@@ -1091,15 +1091,15 @@ button { margin-left: 10px; }
 
 </Sandpack>
 
-Notice how you no longer need to know *how* `useChatRoom` works in order to use it. You could add it to any other component, pass any other options, and it would work the same way. That's the power of custom Hooks.
+שים לב איך אתה כבר לא צריך לדעת *איך* `useChatRoom` עובד כדי להשתמש בו. אתה יכול להוסיף אותו לכל רכיב אחר, להעביר כל אופציה אחרת, וזה יעבוד באותה צורה. זה הכוח של הHooks מותאמים אישית.
 
-## When to use custom Hooks {/*when-to-use-custom-hooks*/}
+## מתי להשתמש ב-Hooks מותאמים אישית {/*when-to-use-custom-hooks*/}
 
-You don't need to extract a custom Hook for every little duplicated bit of code. Some duplication is fine. For example, extracting a `useFormInput` Hook to wrap a single `useState` call like earlier is probably unnecessary.
+אינך צריך לחלץ Hook מותאם אישית עבור כל פיסת קוד משוכפלת קטנה. כמה כפילות זה בסדר. לדוגמה, חילוץ `useFormInput` Hook כדי לכרוך קריאת `useState` בודדת כמו קודם הוא כנראה מיותר.
 
-However, whenever you write an Effect, consider whether it would be clearer to also wrap it in a custom Hook. [You shouldn't need Effects very often,](/learn/you-might-not-need-an-effect) so if you're writing one, it means that you need to "step outside React" to synchronize with some external system or to do something that React doesn't have a built-in API for. Wrapping it into a custom Hook lets you precisely communicate your intent and how the data flows through it.
+עם זאת, בכל פעם שאתה כותב אפקט, שקול אם יהיה ברור יותר לעטוף אותו גם בHook מותאם אישית. [לא צריך אפקטים לעתים קרובות מאוד,](/learn/you-might-not-need-an-effect) אז אם אתה כותב אחד, זה אומר שאתה צריך "לצאת מחוץ ל-React" כדי להסתנכרן עם מערכת חיצונית כלשהי או לעשות משהו של-React אין API מובנה עבורו. לעטוף אותו לתוך Hook מותאם אישית מאפשר לך לתקשר במדויק את כוונתך וכיצד הנתונים זורמים דרכו.
 
-For example, consider a `ShippingForm` component that displays two dropdowns: one shows the list of cities, and another shows the list of areas in the selected city. You might start with some code that looks like this:
+לדוגמה, שקול רכיב `ShippingForm` המציג שתי תפריטים נפתחים: אחד מציג את רשימת הערים, ואחר מציג את רשימת האזורים בעיר שנבחרה. אתה יכול להתחיל עם איזה קוד שנראה כך:
 
 ```js {3-16,20-35}
 function ShippingForm({ country }) {
@@ -1141,7 +1141,7 @@ function ShippingForm({ country }) {
   // ...
 ```
 
-Although this code is quite repetitive, [it's correct to keep these Effects separate from each other.](/learn/removing-effect-dependencies#is-your-effect-doing-several-unrelated-things) They synchronize two different things, so you shouldn't merge them into one Effect. Instead, you can simplify the `ShippingForm` component above by extracting the common logic between them into your own `useData` Hook:
+למרות שהקוד הזה די חוזר על עצמו, [נכון לשמור על אפקטים אלה נפרדים זה מזה.](/learn/removing-effect-dependencies#is-your-effect-doing-several-unrelated-things) הם מסנכרנים שני דברים שונים, אז לא כדאי למזג אותם לאפקט אחד. במקום זאת, אתה יכול לפשט את רכיב `ShippingForm` למעלה על ידי חילוץ ההיגיון המשותף ביניהם לתוך ה-`useData` שלך:
 
 ```js {2-18}
 function useData(url) {
@@ -1165,7 +1165,7 @@ function useData(url) {
 }
 ```
 
-Now you can replace both Effects in the `ShippingForm` components with calls to `useData`:
+כעת אתה יכול להחליף את שני האפקטים ברכיבי `ShippingForm` בקריאות ל-`useData`:
 
 ```js {2,4}
 function ShippingForm({ country }) {
@@ -1175,33 +1175,33 @@ function ShippingForm({ country }) {
   // ...
 ```
 
-Extracting a custom Hook makes the data flow explicit. You feed the `url` in and you get the `data` out. By "hiding" your Effect inside `useData`, you also prevent someone working on the `ShippingForm` component from adding [unnecessary dependencies](/learn/removing-effect-dependencies) to it. With time, most of your app's Effects will be in custom Hooks.
+חילוץ Hook מותאם אישית הופך את זרימת הנתונים למפורשת. אתה מזין את ה'כתובת' פנימה ואתה מוציא את ה'נתונים'. על ידי "הסתרת" האפקט שלך בתוך `useData`, אתה גם מונע ממישהו שעובד על רכיב `ShippingForm` להוסיף לו [תלות מיותרת](/learn/removing-effect-dependencies). עם הזמן, רוב האפקטים של האפליקציה שלך יהיו ב-Hooks מותאמים אישית.
 
 <DeepDive>
 
-#### Keep your custom Hooks focused on concrete high-level use cases {/*keep-your-custom-hooks-focused-on-concrete-high-level-use-cases*/}
+#### שמור את ה-Hooks המותאמים אישית שלך ממוקדים במקרים של שימוש בטון ברמה גבוהה {/*לשמור-your-custom-hooks-focused-on-concrete-high-level-use-cases*/}
 
-Start by choosing your custom Hook's name. If you struggle to pick a clear name, it might mean that your Effect is too coupled to the rest of your component's logic, and is not yet ready to be extracted.
+התחל בבחירת השם המותאם אישית של Hook. אם אתה מתקשה לבחור שם ברור, זה עשוי לומר שהאפקט שלך מחובר מדי לשאר ההיגיון של הרכיב שלך, ועדיין אינו מוכן לחילוץ.
 
-Ideally, your custom Hook's name should be clear enough that even a person who doesn't write code often could have a good guess about what your custom Hook does, what it takes, and what it returns:
+באופן אידיאלי, השם של ה-Hook המותאם אישית שלך צריך להיות ברור מספיק כדי שאפילו אדם שלא כותב קוד לעתים קרובות יוכל לנחש היטב מה ה-Hook המותאם אישית שלך עושה, מה הוא דורש ומה הוא מחזיר:
 
 * ✅ `useData(url)`
 * ✅ `useImpressionLog(eventName, extraData)`
-* ✅ `useChatRoom(options)`
+* ✅ `שימוש בצ'אט (אפשרויות)`
 
-When you synchronize with an external system, your custom Hook name may be more technical and use jargon specific to that system. It's good as long as it would be clear to a person familiar with that system:
+כאשר אתה מסתנכרן עם מערכת חיצונית, השם Hook המותאם אישית שלך עשוי להיות טכני יותר ולהשתמש בז'רגון ספציפי לאותה מערכת. זה טוב כל עוד זה יהיה ברור לאדם שמכיר את המערכת הזו:
 
-* ✅ `useMediaQuery(query)`
+* ✅ `useMediaQuery(שאילתה)`
 * ✅ `useSocket(url)`
 * ✅ `useIntersectionObserver(ref, options)`
 
-**Keep custom Hooks focused on concrete high-level use cases.** Avoid creating and using custom "lifecycle" Hooks that act as alternatives and convenience wrappers for the `useEffect` API itself:
+**שמור על הHooks מותאמים אישית ממוקדים במקרים של שימוש בטון ברמה גבוהה.** הימנע מיצירה ושימוש ב-Hooks מותאמים אישית של "מחזור חיים" הפועלים כאלטרנטיבות ועטיפות נוחות עבור ממשק ה-API של 'useEffect' עצמו:
 
 * 🔴 `useMount(fn)`
 * 🔴 `useEffectOnce(fn)`
 * 🔴 `useUpdateEffect(fn)`
 
-For example, this `useMount` Hook tries to ensure some code only runs "on mount":
+לדוגמה, ה-'useMount' Hook הזה מנסה להבטיח שקוד מסוים רץ רק "על mount":
 
 ```js {4-5,14-15}
 function ChatRoom({ roomId }) {
@@ -1225,9 +1225,9 @@ function useMount(fn) {
 }
 ```
 
-**Custom "lifecycle" Hooks like `useMount` don't fit well into the React paradigm.** For example, this code example has a mistake (it doesn't "react" to `roomId` or `serverUrl` changes), but the linter won't warn you about it because the linter only checks direct `useEffect` calls. It won't know about your Hook.
+**Hooks של "מחזור חיים" מותאם אישית כמו `useMount` אינם מתאימים היטב לפרדיגמת React.** לדוגמה, בדוגמה של קוד זו יש טעות (הוא לא "מגיב" לשינויים של `roomId` או `serverUrl`), אבל ה-linter לא מזהיר אותך על כך מכיוון שה-linter בודק רק קריאות ישירות של 'useEffect'. זה לא יידע על Hook שלך.
 
-If you're writing an Effect, start by using the React API directly:
+אם אתה כותב אפקט, התחל על ידי שימוש ישירות ב-React API:
 
 ```js
 function ChatRoom({ roomId }) {
@@ -1249,7 +1249,7 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-Then, you can (but don't have to) extract custom Hooks for different high-level use cases:
+לאחר מכן, אתה יכול (אך לא חייב) לחלץ Hooks מותאמים אישית עבור מקרי שימוש שונים ברמה גבוהה:
 
 ```js
 function ChatRoom({ roomId }) {
@@ -1262,15 +1262,15 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-**A good custom Hook makes the calling code more declarative by constraining what it does.** For example, `useChatRoom(options)` can only connect to the chat room, while `useImpressionLog(eventName, extraData)` can only send an impression log to the analytics. If your custom Hook API doesn't constrain the use cases and is very abstract, in the long run it's likely to introduce more problems than it solves.
+**Hook מותאם אישית טוב הופך את הקוד הקורא להצהרתי יותר על ידי הגבלה של מה שהוא עושה.** לדוגמה, `useChatRoom(options)` יכול להתחבר רק לחדר הצ'אט, בעוד ש-`useImpressionLog(eventName, extraData)` יכול לשלוח רק יומן הופעות לניתוח. אם ה-API המותאם אישית של Hook לא מגביל את מקרי השימוש והוא מאוד מופשט, בטווח הארוך הוא צפוי להציג יותר בעיות ממה שהוא פותר.
 
 </DeepDive>
 
-### Custom Hooks help you migrate to better patterns {/*custom-hooks-help-you-migrate-to-better-patterns*/}
+### ווים מותאמים אישית עוזרים לך לעבור לדפוסים טובים יותר {/*custom-hooks-help-you-migrate-to-better-patterns*/}
 
-Effects are an ["escape hatch"](/learn/escape-hatches): you use them when you need to "step outside React" and when there is no better built-in solution for your use case. With time, the React team's goal is to reduce the number of the Effects in your app to the minimum by providing more specific solutions to more specific problems. Wrapping your Effects in custom Hooks makes it easier to upgrade your code when these solutions become available.
+אפקטים הם ["פתח מילוט"](/learn/escape-hatches): אתה משתמש בהם כאשר אתה צריך "לצאת החוצה React" וכאשר אין פתרון מובנה טוב יותר עבור מקרה השימוש שלך. עם הזמן, המטרה של צוות React היא לצמצם את מספר האפקטים באפליקציה שלך למינימום על ידי מתן פתרונות ספציפיים יותר לבעיות ספציפיות יותר. עטיפה של האפקטים שלך ב-Hooks מותאמים אישית מקלה על שדרוג הקוד שלך כאשר הפתרונות האלה יהיו זמינים.
 
-Let's return to this example:
+נחזור לדוגמא הזו:
 
 <Sandpack>
 
@@ -1331,9 +1331,9 @@ export function useOnlineStatus() {
 
 </Sandpack>
 
-In the above example, `useOnlineStatus` is implemented with a pair of [`useState`](/reference/react/useState) and [`useEffect`.](/reference/react/useEffect) However, this isn't the best possible solution. There is a number of edge cases it doesn't consider. For example, it assumes that when the component mounts, `isOnline` is already `true`, but this may be wrong if the network already went offline. You can use the browser [`navigator.onLine`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine) API to check for that, but using it directly would not work on the server for generating the initial HTML. In short, this code could be improved.
+בדוגמה שלמעלה, `useOnlineStatus` מיושם עם זוג של [`useState`](/reference/react/useState) ו-[`useEffect`.](/reference/react/useEffect) עם זאת, זה לא הפתרון הטוב ביותר האפשרי. יש מספר מקרי קצה שהיא לא לוקחת בחשבון. לדוגמה, הוא מניח שכאשר הרכיב נטען, `isOnline` כבר `נכון`, אבל זה עשוי להיות שגוי אם הרשת כבר יצאה לstate לא מקוון. אתה יכול להשתמש בממשק ה-API של הדפדפן [`navigator.onLine`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine) כדי לבדוק זאת, אך השימוש בו ישירות לא יעבוד בשרת ליצירת ה-HTML הראשוני. בקיצור, ניתן לשפר את הקוד הזה.
 
-Luckily, React 18 includes a dedicated API called [`useSyncExternalStore`](/reference/react/useSyncExternalStore) which takes care of all of these problems for you. Here is how your `useOnlineStatus` Hook, rewritten to take advantage of this new API:
+למרבה המזל, React 18 כולל API ייעודי בשם [`useSyncExternalStore`](/reference/react/useSyncExternalStore) שמטפל בכל הבעיות הללו עבורך. הנה איך ה-'useOnlineStatus' שלך נכתב מחדש כדי לנצל את ה-API החדש הזה:
 
 <Sandpack>
 
@@ -1393,7 +1393,7 @@ export function useOnlineStatus() {
 
 </Sandpack>
 
-Notice how **you didn't need to change any of the components** to make this migration:
+שימו לב כיצד **לא היית צריך לשנות אף אחד מהרכיבים** כדי לבצע את ההגירה הזו:
 
 ```js {2,7}
 function StatusBar() {
@@ -1407,19 +1407,19 @@ function SaveButton() {
 }
 ```
 
-This is another reason for why wrapping Effects in custom Hooks is often beneficial:
+זו סיבה נוספת לכך שעטיפה של אפקטים בHooks מותאמים אישית היא לעתים קרובות מועילה:
 
-1. You make the data flow to and from your Effects very explicit.
-2. You let your components focus on the intent rather than on the exact implementation of your Effects.
-3. When React adds new features, you can remove those Effects without changing any of your components.
+1. אתה הופך את זרימת הנתונים אל האפקטים שלך וממנו בצורה מאוד מפורשת.
+2. אתה נותן לרכיבים שלך להתמקד בכוונה ולא ביישום המדויק של האפקטים שלך.
+3. כאשר React מוסיף תכונות חדשות, אתה יכול להסיר את האפקטים האלה מבלי לשנות אף אחד מהרכיבים שלך.
 
-Similar to a [design system,](https://uxdesign.cc/everything-you-need-to-know-about-design-systems-54b109851969) you might find it helpful to start extracting common idioms from your app's components into custom Hooks. This will keep your components' code focused on the intent, and let you avoid writing raw Effects very often. Many excellent custom Hooks are maintained by the React community.
+בדומה ל[מערכת עיצוב,](https://uxdesign.cc/everything-you-need-to-know-about-design-systems-54b109851969) אולי יעזור לך להתחיל לחלץ ניבים נפוצים ממרכיבי האפליקציה שלך לתוך Hooks מותאמים אישית. זה ישמור על הקוד של הרכיבים שלך ממוקד בכוונה, ויאפשר לך להימנע מכתיבת אפקטים גולמיים לעתים קרובות מאוד. הHooks מותאמים אישית רבים מתוחזקים על ידי קהילת React.
 
 <DeepDive>
 
-#### Will React provide any built-in solution for data fetching? {/*will-react-provide-any-built-in-solution-for-data-fetching*/}
+#### האם React יספק כל פתרון מובנה לאיסוף נתונים? {/*תגיב-לספק-כל-פתרון-מובנה-לשליפת-נתונים*/}
 
-We're still working out the details, but we expect that in the future, you'll write data fetching like this:
+אנחנו עדיין עובדים על הפרטים, אבל אנו מצפים שבעתיד תכתוב איסוף נתונים כך:
 
 ```js {1,4,6}
 import { use } from 'react'; // Not available yet!
@@ -1431,13 +1431,13 @@ function ShippingForm({ country }) {
   // ...
 ```
 
-If you use custom Hooks like `useData` above in your app, it will require fewer changes to migrate to the eventually recommended approach than if you write raw Effects in every component manually. However, the old approach will still work fine, so if you feel happy writing raw Effects, you can continue to do that.
+אם אתה משתמש ב-Hooks מותאמים אישית כמו 'useData' למעלה באפליקציה שלך, זה ידרוש פחות שינויים כדי לעבור לגישה המומלצת בסופו של דבר מאשר אם תכתוב אפקטים גולמיים בכל רכיב באופן ידני. עם זאת, הגישה הישנה עדיין תעבוד בסדר, אז אם אתה מרגיש שמח לכתוב אפקטים גולמיים, אתה יכול להמשיך לעשות זאת.
 
 </DeepDive>
 
-### There is more than one way to do it {/*there-is-more-than-one-way-to-do-it*/}
+### יש יותר מדרך אחת לעשות את זה {/*יש-יותר-מאחת-דרך-לעשות-זה*/}
 
-Let's say you want to implement a fade-in animation *from scratch* using the browser [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) API. You might start with an Effect that sets up an animation loop. During each frame of the animation, you could change the opacity of the DOM node you [hold in a ref](/learn/manipulating-the-dom-with-refs) until it reaches `1`. Your code might start like this:
+נניח שאתה רוצה ליישם אנימציה דהייה *מאפס* באמצעות דפדפן [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) API. אתה יכול להתחיל עם אפקט שמגדיר לולאת אנימציה. במהלך כל פריים של האנימציה, אתה יכול לשנות את האטימות של צומת ה-DOM שאתה [מחזיק ב-ref](/learn/manipulating-the-dom-with-refs) עד שהוא מגיע ל-`1`. הקוד שלך עשוי להתחיל כך:
 
 <Sandpack>
 
@@ -1520,7 +1520,7 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-To make the component more readable, you might extract the logic into a `useFadeIn` custom Hook:
+כדי להפוך את הרכיב לקריאה יותר, תוכל לחלץ את ההיגיון לתוך Hook מותאם אישית של 'useFadeIn':
 
 <Sandpack>
 
@@ -1611,7 +1611,7 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-You could keep the `useFadeIn` code as is, but you could also refactor it more. For example, you could extract the logic for setting up the animation loop out of `useFadeIn` into a custom `useAnimationLoop` Hook:
+אתה יכול לשמור את הקוד 'useFadeIn' כפי שהוא, אבל אתה יכול גם לשחזר אותו יותר. לדוגמה, אתה יכול לחלץ את ההיגיון להגדרת לולאת האנימציה מתוך `useFadeIn` ל-`useAnimationLoop` Hook מותאם אישית:
 
 <Sandpack>
 
@@ -1715,7 +1715,7 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-However, you didn't *have to* do that. As with regular functions, ultimately you decide where to draw the boundaries between different parts of your code. You could also take a very different approach. Instead of keeping the logic in the Effect, you could move most of the imperative logic inside a JavaScript [class:](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+עם זאת, לא *חייב* לעשות זאת. כמו בפונקציות רגילות, בסופו של דבר אתה מחליט היכן לשרטט את הגבולות בין חלקים שונים של הקוד שלך. אתה יכול גם לנקוט בגישה שונה מאוד. במקום לשמור על ההיגיון באפקט, אתה יכול להעביר את רוב ההיגיון החיוני בתוך JavaScript [מחלקה:](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
 
 <Sandpack>
 
@@ -1813,9 +1813,9 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-Effects let you connect React to external systems. The more coordination between Effects is needed (for example, to chain multiple animations), the more it makes sense to extract that logic out of Effects and Hooks *completely* like in the sandbox above. Then, the code you extracted *becomes* the "external system". This lets your Effects stay simple because they only need to send messages to the system you've moved outside React.
+אפקטים מאפשרים לך לחבר את React למערכות חיצוניות. ככל שנדרש יותר תיאום בין אפקטים (לדוגמה, לשרשרת אנימציות מרובות), יותר הגיוני לחלץ את ההיגיון הזה מתוך אפקטים וHooks *לגמרי* כמו בארגז החול שלמעלה. לאחר מכן, הקוד שחילצת *הופך* ל"מערכת החיצונית". זה מאפשר לאפקטים שלך להישאר פשוטים מכיוון שהם רק צריכים לשלוח הודעות למערכת שהעברת מחוץ ל-React.
 
-The examples above assume that the fade-in logic needs to be written in JavaScript. However, this particular fade-in animation is both simpler and much more efficient to implement with a plain [CSS Animation:](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations)
+הדוגמאות לעיל מניחות שהלוגיקת ה-Fade-in צריכה להיות כתובה ב-JavaScript. עם זאת, אנימציית הדה-אין הספציפית הזו פשוטה יותר והרבה יותר יעילה ליישום עם [CSS Animation:](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations)
 
 <Sandpack>
 
@@ -1870,27 +1870,27 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-Sometimes, you don't even need a Hook!
+לפעמים, אתה אפילו לא צריך Hook!
 
 <Recap>
 
-- Custom Hooks let you share logic between components.
-- Custom Hooks must be named starting with `use` followed by a capital letter.
-- Custom Hooks only share stateful logic, not state itself.
-- You can pass reactive values from one Hook to another, and they stay up-to-date.
-- All Hooks re-run every time your component re-renders.
-- The code of your custom Hooks should be pure, like your component's code.
-- Wrap event handlers received by custom Hooks into Effect Events.
-- Don't create custom Hooks like `useMount`. Keep their purpose specific.
-- It's up to you how and where to choose the boundaries of your code.
+- ווים מותאמים אישית מאפשרים לך לשתף היגיון בין רכיבים.
+- יש לתת שם ל-Custom Hooks שמתחיל ב-'use' ואחריו באות גדולה.
+- ווים מותאמים אישית חולקים רק היגיון מצבי, לא מצב עצמו.
+- אתה יכול להעביר ערכים תגובתיים מHook אחד למשנהו, והם נשארים מעודכנים.
+- כל הHooks פועלים מחדש בכל פעם שהרכיב שלך מעבד מחדש.
+- הקוד של Hooks המותאמים אישית שלך צריך להיות טהור, כמו הקוד של הרכיב שלך.
+- עטוף מטפלי אירועים שהתקבלו על ידי Hooks מותאמים אישית לאירועי אפקט.
+- אל תיצור ווים מותאמים אישית כמו `useMount`. שמור על ייעודם ספציפי.
+- זה תלוי בך איך והיכן לבחור את גבולות הקוד שלך.
 
 </Recap>
 
 <Challenges>
 
-#### Extract a `useCounter` Hook {/*extract-a-usecounter-hook*/}
+#### חלץ Hook של `useCounter` {/*extract-a-usecounter-hook*/}
 
-This component uses a state variable and an Effect to display a number that increments every second. Extract this logic into a custom Hook called `useCounter`. Your goal is to make the `Counter` component implementation look exactly like this:
+רכיב זה משתמש במשתנה מצב ובאפקט כדי להציג מספר שגדל כל שנייה. חלץ את ההיגיון הזה לתוך Hook מותאם אישית בשם `useCounter`. המטרה שלך היא לגרום למימוש רכיב 'Counter' להיראות בדיוק כך:
 
 ```js
 export default function Counter() {
@@ -1899,7 +1899,7 @@ export default function Counter() {
 }
 ```
 
-You'll need to write your custom Hook in `useCounter.js` and import it into the `Counter.js` file.
+תצטרך לכתוב את ה-Hook המותאם אישית שלך ב-`useCounter.js` ולייבא אותו לקובץ `Counter.js`.
 
 <Sandpack>
 
@@ -1926,7 +1926,7 @@ export default function Counter() {
 
 <Solution>
 
-Your code should look like this:
+הקוד שלך אמור להיראות כך:
 
 <Sandpack>
 
@@ -1956,13 +1956,13 @@ export function useCounter() {
 
 </Sandpack>
 
-Notice that `App.js` doesn't need to import `useState` or `useEffect` anymore.
+שימו לב ש-'App.js' לא צריך לייבא יותר את 'useState' או 'useEffect'.
 
 </Solution>
 
-#### Make the counter delay configurable {/*make-the-counter-delay-configurable*/}
+#### הפוך את השהיית המונה לניתנת להגדרה {/*הפוך-את-הדלפק-להגדרה*/}
 
-In this example, there is a `delay` state variable controlled by a slider, but its value is not used. Pass the `delay` value to your custom `useCounter` Hook, and change the `useCounter` Hook to use the passed `delay` instead of hardcoding `1000` ms.
+בדוגמה זו, קיים משתנה מצב 'עיכוב' שנשלט על ידי מחוון, אך הערך שלו אינו בשימוש. העבר את ערך ה-'delay' ל-'useCounter'-Hook המותאם אישית שלך, ושנו את ה-'useCounter'-Hook כדי להשתמש ב-'delay' שעבר במקום לקודד קשה של '1000' אלפיות השנייה.
 
 <Sandpack>
 
@@ -2012,7 +2012,7 @@ export function useCounter() {
 
 <Solution>
 
-Pass the `delay` to your Hook with `useCounter(delay)`. Then, inside the Hook, use `delay` instead of the hardcoded `1000` value. You'll need to add `delay` to your Effect's dependencies. This ensures that a change in `delay` will reset the interval.
+העבר את ה-'delay' לHook שלך עם 'useCounter(delay)'. לאחר מכן, בתוך ה-Hook, השתמש ב-'delay' במקום בערך '1000' המקודד. תצטרך להוסיף 'עיכוב' לתלות של האפקט שלך. זה מבטיח ששינוי ב'עיכוב' יאפס את המרווח.
 
 <Sandpack>
 
@@ -2062,9 +2062,9 @@ export function useCounter(delay) {
 
 </Solution>
 
-#### Extract `useInterval` out of `useCounter` {/*extract-useinterval-out-of-usecounter*/}
+#### חלץ `useInterval` מתוך `useCounter` {/*extract-useinterval-out-of-usecounter*/}
 
-Currently, your `useCounter` Hook does two things. It sets up an interval, and it also increments a state variable on every interval tick. Split out the logic that sets up the interval into a separate Hook called `useInterval`. It should take two arguments: the `onTick` callback, and the `delay`. After this change, your `useCounter` implementation should look like this:
+נכון לעכשיו, ה-'useCounter' Hook שלך עושה שני דברים. הוא מגדיר מרווח, והוא גם מגדיל משתנה מצב על כל סימון מרווח. חלקו את ההיגיון שמגדיר את המרווח ל-Hook נפרד שנקרא `useInterval`. זה צריך לקחת שני ארגומנטים: ה-'onTick' callback, וה-'delay'. לאחר השינוי הזה, היישום 'useCounter' שלך אמור להיראות כך:
 
 ```js
 export function useCounter(delay) {
@@ -2076,7 +2076,7 @@ export function useCounter(delay) {
 }
 ```
 
-Write `useInterval` in the `useInterval.js` file and import it into the `useCounter.js` file.
+כתוב 'useInterval' בקובץ 'useInterval.js' וייבא אותו לקובץ 'useCounter.js'.
 
 <Sandpack>
 
@@ -2113,7 +2113,7 @@ export function useCounter(delay) {
 
 <Solution>
 
-The logic inside `useInterval` should set up and clear the interval. It doesn't need to do anything else.
+ההיגיון בתוך 'useInterval' צריך להגדיר ולנקות את המרווח. זה לא צריך לעשות שום דבר אחר.
 
 <Sandpack>
 
@@ -2152,17 +2152,17 @@ export function useInterval(onTick, delay) {
 
 </Sandpack>
 
-Note that there is a bit of a problem with this solution, which you'll solve in the next challenge.
+שימו לב שיש קצת בעיה עם הפתרון הזה, אותה תפתרו באתגר הבא.
 
 </Solution>
 
-#### Fix a resetting interval {/*fix-a-resetting-interval*/}
+#### תקן מרווח איפוס {/*fix-a-resetting-interval*/}
 
-In this example, there are *two* separate intervals.
+בדוגמה זו, יש *שני* מרווחים נפרדים.
 
-The `App` component calls `useCounter`, which calls `useInterval` to update the counter every second. But the `App` component *also* calls `useInterval` to randomly update the page background color every two seconds.
+רכיב ה'אפליקציה' קורא ל'useCounter', שקורא ל'useInterval' כדי לעדכן את המונה בכל שנייה. אבל רכיב ה'אפליקציה' *גם* קורא 'useInterval' כדי לעדכן באופן אקראי את צבע הרקע של העמוד כל שתי שניות.
 
-For some reason, the callback that updates the page background never runs. Add some logs inside `useInterval`:
+מסיבה כלשהי, ה-callback שמעדכן את רקע העמוד אף פעם לא פועל. הוסף כמה יומנים בתוך 'useInterval':
 
 ```js {2,5}
   useEffect(() => {
@@ -2175,13 +2175,13 @@ For some reason, the callback that updates the page background never runs. Add s
   }, [onTick, delay]);
 ```
 
-Do the logs match what you expect to happen? If some of your Effects seem to re-synchronize unnecessarily, can you guess which dependency is causing that to happen? Is there some way to [remove that dependency](/learn/removing-effect-dependencies) from your Effect?
+האם היומנים תואמים למה שאתה מצפה שיקרה? אם נראה שחלק מהאפקטים שלך מסתנכרנים מחדש שלא לצורך, האם אתה יכול לנחש איזו תלות גורמת לזה לקרות? האם יש דרך כלשהי [להסיר את התלות הזו](/learn/removing-effect-dependencies) מהאפקט שלך?
 
-After you fix the issue, you should expect the page background to update every two seconds.
+לאחר שתתקן את הבעיה, עליך לצפות שרקע הדף יתעדכן כל שתי שניות.
 
 <Hint>
 
-It looks like your `useInterval` Hook accepts an event listener as an argument. Can you think of some way to wrap that event listener so that it doesn't need to be a dependency of your Effect?
+זה נראה כאילו ה-'useInterval' שלך מקבל מאזין אירועים כטיעון. האם אתה יכול לחשוב על איזושהי דרך לעטוף את המאזין לאירועים כך שהוא לא צריך להיות תלוי באפקט שלך?
 
 </Hint>
 
@@ -2250,11 +2250,11 @@ export function useInterval(onTick, delay) {
 
 <Solution>
 
-Inside `useInterval`, wrap the tick callback into an Effect Event, as you did [earlier on this page.](/learn/reusing-logic-with-custom-hooks#passing-event-handlers-to-custom-hooks)
+בתוך `useInterval`, עטפו את ה-Tick Callback לאירוע אפקט, כפי שעשיתם [קודם בדף זה.](/learn/reusing-logic-with-custom-hooks#passing-event-handlers-to-custom-hooks)
 
-This will allow you to omit `onTick` from dependencies of your Effect. The Effect won't re-synchronize on every re-render of the component, so the page background color change interval won't get reset every second before it has a chance to fire.
+זה יאפשר לך להשמיט את 'onTick' מהתלות של האפקט שלך. האפקט לא יסונכרן מחדש בכל עיבוד מחדש של הרכיב, כך שמרווח שינוי צבע הרקע של הדף לא יתאפס כל שנייה לפני שתהיה לו הזדמנות להפעיל.
 
-With this change, both intervals work as expected and don't interfere with each other:
+עם שינוי זה, שני המרווחים פועלים כמצופה ואינם מפריעים זה לזה:
 
 <Sandpack>
 
@@ -2321,21 +2321,21 @@ export function useInterval(callback, delay) {
 
 </Solution>
 
-#### Implement a staggering movement {/*implement-a-staggering-movement*/}
+#### יישם תנועה מדהימה {/*יישם-תנועה-מדהימה*/}
 
-In this example, the `usePointerPosition()` Hook tracks the current pointer position. Try moving your cursor or your finger over the preview area and see the red dot follow your movement. Its position is saved in the `pos1` variable.
+בדוגמה זו, Hook `usePointerPosition()` עוקב אחר מיקום הstateיע הנוכחי. נסה להזיז את הסמן או את האצבע שלך על אזור התצוגה המקדימה וראה את הנקודה האדומה עוקבת אחר התנועה שלך. המיקום שלו נשמר במשתנה `pos1`.
 
-In fact, there are five (!) different red dots being rendered. You don't see them because currently they all appear at the same position. This is what you need to fix. What you want to implement instead is a "staggered" movement: each dot should "follow" the previous dot's path. For example, if you quickly move your cursor, the first dot should follow it immediately, the second dot should follow the first dot with a small delay, the third dot should follow the second dot, and so on.
+למעשה, יש חמש (!) נקודות אדומות שונות המוצגות. אתה לא רואה אותם כי כרגע כולם מופיעים באותו מיקום. זה מה שאתה צריך לתקן. מה שאתה רוצה ליישם במקום זאת הוא תנועה "מדורגת": כל נקודה צריכה "לעקוב אחרי" הנתיב של הנקודה הקודמת. לדוגמה, אם תזיז במהירות את הסמן, הנקודה הראשונה צריכה לעקוב אחריו מיד, הנקודה השנייה צריכה לעקוב אחרי הנקודה הראשונה בהשהייה קטנה, הנקודה השלישית צריכה לעקוב אחרי הנקודה השנייה, וכן הלאה.
 
-You need to implement the `useDelayedValue` custom Hook. Its current implementation returns the `value` provided to it. Instead, you want to return the value back from `delay` milliseconds ago. You might need some state and an Effect to do this.
+עליך ליישם את ה-Hook המותאם אישית 'useDelayedValue'. היישום הנוכחי שלו מחזיר את ה'ערך' שסופק לו. במקום זאת, אתה רוצה להחזיר את הערך בחזרה מלפני אלפיות שנייה של 'עיכוב'. ייתכן שתזדקק לאיזשהו מצב ואפקט כדי לעשות זאת.
 
-After you implement `useDelayedValue`, you should see the dots move following one another.
+לאחר הטמעת 'useDelayedValue', אתה אמור לראות את הנקודות זזות אחת אחרי השנייה.
 
 <Hint>
 
-You'll need to store the `delayedValue` as a state variable inside your custom Hook. When the `value` changes, you'll want to run an Effect. This Effect should update `delayedValue` after the `delay`. You might find it helpful to call `setTimeout`.
+יהיה עליך לאחסן את `delayedValue` כמשתנה מצב בתוך ה-Hook המותאם אישית שלך. כאשר ה'ערך' משתנה, תרצה להפעיל אפקט. אפקט זה אמור לעדכן את 'delayedValue' לאחר ה-'delay'. אולי יעזור לך לקרוא ל'setTimeout'.
 
-Does this Effect need cleanup? Why or why not?
+האם האפקט הזה צריך ניקוי? למה או למה לא?
 
 </Hint>
 
@@ -2408,7 +2408,7 @@ body { min-height: 300px; }
 
 <Solution>
 
-Here is a working version. You keep the `delayedValue` as a state variable. When `value` updates, your Effect schedules a timeout to update the `delayedValue`. This is why the `delayedValue` always "lags behind" the actual `value`.
+הנה גרסה עובדת. אתה שומר את ה-'delayedValue' כמשתנה מצב. כאשר 'ערך' מתעדכן, האפקט שלך מתזמן פסק זמן לעדכון ה-'delayedValue'. זו הסיבה שה-`delayedValue` תמיד "נגרר מאחורי" ה`ערך` בפועל.
 
 <Sandpack>
 
@@ -2485,8 +2485,9 @@ body { min-height: 300px; }
 
 </Sandpack>
 
-Note that this Effect *does not* need cleanup. If you called `clearTimeout` in the cleanup function, then each time the `value` changes, it would reset the already scheduled timeout. To keep the movement continuous, you want all the timeouts to fire.
+שימו לב שהאפקט הזה *לא* זקוק לניקוי. אם קראת 'clearTimeout' בפונקציית הניקוי, אז בכל פעם שה'ערך' משתנה, זה יאפס את הזמן הקצוב שכבר מתוזמן. כדי לשמור על התנועה רציפה, אתה רוצה שכל פסקי הזמן יפעלו.
 
 </Solution>
 
 </Challenges>
+

@@ -4,7 +4,7 @@ title: createElement
 
 <Intro>
 
-`createElement` lets you create a React element. It serves as an alternative to writing [JSX.](/learn/writing-markup-with-jsx)
+`createElement` מאפשרת ליצור React element. היא משמשת חלופה לכתיבת [JSX.](/learn/writing-markup-with-jsx)
 
 ```js
 const element = createElement(type, props, ...children)
@@ -20,7 +20,7 @@ const element = createElement(type, props, ...children)
 
 ### `createElement(type, props, ...children)` {/*createelement*/}
 
-Call `createElement` to create a React element with the given `type`, `props`, and `children`.
+קראו ל-`createElement` כדי ליצור React element עם `type`, `props` ו-`children` נתונים.
 
 ```js
 import { createElement } from 'react';
@@ -34,46 +34,46 @@ function Greeting({ name }) {
 }
 ```
 
-[See more examples below.](#usage)
+[ראו דוגמאות נוספות בהמשך.](#usage)
 
 #### Parameters {/*parameters*/}
 
-* `type`: The `type` argument must be a valid React component type. For example, it could be a tag name string (such as `'div'` or `'span'`), or a React component (a function, a class, or a special component like [`Fragment`](/reference/react/Fragment)).
+* `type`: הארגומנט `type` חייב להיות סוג קומפוננטת React תקין. למשל, מחרוזת שם תגית (כמו `'div'` או `'span'`), או קומפוננטת React (פונקציה, class, או קומפוננטה מיוחדת כמו [`Fragment`](/reference/react/Fragment)).
 
-* `props`: The `props` argument must either be an object or `null`. If you pass `null`, it will be treated the same as an empty object. React will create an element with props matching the `props` you have passed. Note that `ref` and `key` from your `props` object are special and will *not* be available as `element.props.ref` and `element.props.key` on the returned `element`. They will be available as `element.ref` and `element.key`.
+* `props`: הארגומנט `props` חייב להיות אובייקט או `null`. אם תעבירו `null`, הוא יטופל כמו אובייקט ריק. React תיצור element עם props תואמים ל-`props` שהעברתם. שימו לב ש-`ref` ו-`key` מתוך אובייקט ה-`props` שלכם הם מיוחדים, ולכן *לא* יהיו זמינים כ-`element.props.ref` ו-`element.props.key` על ה-`element` המוחזר. הם יהיו זמינים כ-`element.ref` ו-`element.key`.
 
-* **optional** `...children`: Zero or more child nodes. They can be any React nodes, including React elements, strings, numbers, [portals](/reference/react-dom/createPortal), empty nodes (`null`, `undefined`, `true`, and `false`), and arrays of React nodes.
+* **אופציונלי** `...children`: אפס או יותר child nodes. הם יכולים להיות כל סוג של React nodes, כולל React elements, מחרוזות, מספרים, [portals](/reference/react-dom/createPortal), nodes ריקים (`null`, `undefined`, `true`, ו-`false`), ומערכים של React nodes.
 
 #### Returns {/*returns*/}
 
-`createElement` returns a React element object with a few properties:
+`createElement` מחזירה אובייקט React element עם כמה מאפיינים:
 
-* `type`: The `type` you have passed.
-* `props`: The `props` you have passed except for `ref` and `key`. If the `type` is a component with legacy `type.defaultProps`, then any missing or undefined `props` will get the values from `type.defaultProps`.
-* `ref`: The `ref` you have passed. If missing, `null`.
-* `key`: The `key` you have passed, coerced to a string. If missing, `null`.
+* `type`: ה-`type` שהעברתם.
+* `props`: ה-`props` שהעברתם, למעט `ref` ו-`key`. אם `type` היא קומפוננטה עם legacy `type.defaultProps`, אז כל `props` חסרים או `undefined` יקבלו את הערכים מתוך `type.defaultProps`.
+* `ref`: ה-`ref` שהעברתם. אם חסר, `null`.
+* `key`: ה-`key` שהעברתם, מומר למחרוזת. אם חסר, `null`.
 
-Usually, you'll return the element from your component or make it a child of another element. Although you may read the element's properties, it's best to treat every element as opaque after it's created, and only render it.
+בדרך כלל תחזירו את ה-element מהקומפוננטה שלכם או תהפכו אותו ל-child של element אחר. למרות שאפשר לקרוא את מאפייני ה-element, עדיף להתייחס לכל element כלא שקוף אחרי יצירתו ורק לרנדר אותו.
 
 #### Caveats {/*caveats*/}
 
-* You must **treat React elements and their props as [immutable](https://en.wikipedia.org/wiki/Immutable_object)** and never change their contents after creation. In development, React will [freeze](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) the returned element and its `props` property shallowly to enforce this.
+* צריך **להתייחס ל-React elements ול-props שלהם כ-[immutable](https://en.wikipedia.org/wiki/Immutable_object)** ולעולם לא לשנות את התוכן שלהם אחרי יצירה. בזמן פיתוח, React תבצע [freeze](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) רדוד ל-element המוחזר ולמאפיין `props` שלו כדי לאכוף זאת.
 
-* When you use JSX, **you must start a tag with a capital letter to render your own custom component.** In other words, `<Something />` is equivalent to `createElement(Something)`, but `<something />` (lowercase) is equivalent to `createElement('something')` (note it's a string, so it will be treated as a built-in HTML tag).
+* כשמשתמשים ב-JSX, **חייבים להתחיל תגית באות גדולה כדי לרנדר custom component.** כלומר, `<Something />` שקול ל-`createElement(Something)`, אבל `<something />` (אותיות קטנות) שקול ל-`createElement('something')` (שימו לב שזו מחרוזת, ולכן תטופל כתגית HTML מובנית).
 
-* You should only **pass children as multiple arguments to `createElement` if they are all statically known,** like `createElement('h1', {}, child1, child2, child3)`. If your children are dynamic, pass the entire array as the third argument: `createElement('ul', {}, listItems)`. This ensures that React will [warn you about missing `key`s](/learn/rendering-lists#keeping-list-items-in-order-with-key) for any dynamic lists. For static lists this is not necessary because they never reorder.
+* כדאי **להעביר children כארגומנטים מרובים ל-`createElement` רק אם כולם ידועים סטטית,** כמו `createElement('h1', {}, child1, child2, child3)`. אם הילדים דינמיים, העבירו את כל המערך כארגומנט שלישי: `createElement('ul', {}, listItems)`. כך React תוכל [להזהיר על `key`s חסרים](/learn/rendering-lists#keeping-list-items-in-order-with-key) עבור רשימות דינמיות. לרשימות סטטיות אין צורך בכך כי הן לא משנות סדר.
 
 ---
 
-## Usage {/*usage*/}
+## שימוש {/*usage*/}
 
-### Creating an element without JSX {/*creating-an-element-without-jsx*/}
+### יצירת element בלי JSX {/*creating-an-element-without-jsx*/}
 
-If you don't like [JSX](/learn/writing-markup-with-jsx) or can't use it in your project, you can use `createElement` as an alternative.
+אם אתם לא אוהבים [JSX](/learn/writing-markup-with-jsx) או לא יכולים להשתמש בה בפרויקט, אפשר להשתמש ב-`createElement` כחלופה.
 
-To create an element without JSX, call `createElement` with some <CodeStep step={1}>type</CodeStep>, <CodeStep step={2}>props</CodeStep>, and <CodeStep step={3}>children</CodeStep>:
+כדי ליצור element בלי JSX, קראו ל-`createElement` עם <CodeStep step={1}>type</CodeStep>, <CodeStep step={2}>props</CodeStep>, ו-<CodeStep step={3}>children</CodeStep>:
 
-```js [[1, 5, "'h1'"], [2, 6, "{ className: 'greeting' }"], [3, 7, "'Hello ',"], [3, 8, "createElement('i', null, name),"], [3, 9, "'. Welcome!'"]]
+```js
 import { createElement } from 'react';
 
 function Greeting({ name }) {
@@ -87,9 +87,9 @@ function Greeting({ name }) {
 }
 ```
 
-The <CodeStep step={3}>children</CodeStep> are optional, and you can pass as many as you need (the example above has three children). This code will display a `<h1>` header with a greeting. For comparison, here is the same example rewritten with JSX:
+ה-<CodeStep step={3}>children</CodeStep> אופציונליים, ואפשר להעביר כמה שצריך (בדוגמה למעלה יש שלושה children). הקוד הזה יציג כותרת `<h1>` עם ברכה. להשוואה, הנה אותה דוגמה שנכתבה עם JSX:
 
-```js [[1, 3, "h1"], [2, 3, "className=\\"greeting\\""], [3, 4, "Hello <i>{name}</i>. Welcome!"], [1, 5, "h1"]]
+```js
 function Greeting({ name }) {
   return (
     <h1 className="greeting">
@@ -99,23 +99,23 @@ function Greeting({ name }) {
 }
 ```
 
-To render your own React component, pass a function like `Greeting` as the <CodeStep step={1}>type</CodeStep> instead of a string like `'h1'`:
+כדי לרנדר קומפוננטת React משלכם, העבירו פונקציה כמו `Greeting` כ-<CodeStep step={1}>type</CodeStep> במקום מחרוזת כמו `'h1'`:
 
-```js [[1, 2, "Greeting"], [2, 2, "{ name: 'Taylor' }"]]
+```js
 export default function App() {
   return createElement(Greeting, { name: 'Taylor' });
 }
 ```
 
-With JSX, it would look like this:
+עם JSX זה היה נראה כך:
 
-```js [[1, 2, "Greeting"], [2, 2, "name=\\"Taylor\\""]]
+```js
 export default function App() {
   return <Greeting name="Taylor" />;
 }
 ```
 
-Here is a complete example written with `createElement`:
+הנה דוגמה מלאה שנכתבה עם `createElement`:
 
 <Sandpack>
 
@@ -149,7 +149,7 @@ export default function App() {
 
 </Sandpack>
 
-And here is the same example written using JSX:
+והנה אותה דוגמה כשהיא כתובה עם JSX:
 
 <Sandpack>
 
@@ -176,13 +176,13 @@ export default function App() {
 
 </Sandpack>
 
-Both coding styles are fine, so you can use whichever one you prefer for your project. The main benefit of using JSX compared to `createElement` is that it's easy to see which closing tag corresponds to which opening tag.
+שני סגנונות הקוד תקינים, ואפשר להשתמש במה שמתאים לפרויקט שלכם. היתרון המרכזי של JSX לעומת `createElement` הוא שקל לראות איזו תגית סוגרת שייכת לאיזו תגית פותחת.
 
 <DeepDive>
 
-#### What is a React element, exactly? {/*what-is-a-react-element-exactly*/}
+#### מהו בעצם React element? {/*what-is-a-react-element-exactly*/}
 
-An element is a lightweight description of a piece of the user interface. For example, both `<Greeting name="Taylor" />` and `createElement(Greeting, { name: 'Taylor' })` produce an object like this:
+Element הוא תיאור קל משקל של חלק מממשק המשתמש. למשל, גם `<Greeting name="Taylor" />` וגם `createElement(Greeting, { name: 'Taylor' })` מייצרים אובייקט כזה:
 
 ```js
 // Slightly simplified
@@ -196,10 +196,10 @@ An element is a lightweight description of a piece of the user interface. For ex
 }
 ```
 
-**Note that creating this object does not render the `Greeting` component or create any DOM elements.**
+**שימו לב שיצירת האובייקט הזה לא מרנדרת את הקומפוננטה `Greeting` ולא יוצרת אלמנטים ב-DOM.**
 
-A React element is more like a description--an instruction for React to later render the `Greeting` component. By returning this object from your `App` component, you tell React what to do next.
+React element דומה יותר לתיאור - הוראה ל-React לרנדר מאוחר יותר את הקומפוננטה `Greeting`. על ידי החזרת האובייקט הזה מקומפוננטת `App`, אתם אומרים ל-React מה לעשות בהמשך.
 
-Creating elements is extremely cheap so you don't need to try to optimize or avoid it.
+יצירת elements היא פעולה זולה מאוד, כך שאין צורך לנסות לבצע לה אופטימיזציה או להימנע ממנה.
 
 </DeepDive>

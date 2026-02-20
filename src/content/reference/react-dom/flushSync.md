@@ -4,13 +4,13 @@ title: flushSync
 
 <Pitfall>
 
-Using `flushSync` is uncommon and can hurt the performance of your app.
+שימוש ב-`flushSync` אינו נפוץ ועלול לפגוע בביצועים של האפליקציה.
 
 </Pitfall>
 
 <Intro>
 
-`flushSync` lets you force React to flush any updates inside the provided callback synchronously. This ensures that the DOM is updated immediately.
+`flushSync` מאפשרת לאלץ את React לבצע flush לכל עדכון בתוך callback שסופק באופן סינכרוני. כך מובטח שה-DOM מתעדכן מיידית.
 
 ```js
 flushSync(callback)
@@ -26,7 +26,7 @@ flushSync(callback)
 
 ### `flushSync(callback)` {/*flushsync*/}
 
-Call `flushSync` to force React to flush any pending work and update the DOM synchronously.
+קראו ל-`flushSync` כדי לאלץ את React לבצע flush לעבודה ממתינה ולעדכן את ה-DOM באופן סינכרוני.
 
 ```js
 import { flushSync } from 'react-dom';
@@ -36,33 +36,33 @@ flushSync(() => {
 });
 ```
 
-Most of the time, `flushSync` can be avoided. Use `flushSync` as last resort.
+ברוב המקרים אפשר להימנע מ-`flushSync`. השתמשו בה כמוצא אחרון.
 
-[See more examples below.](#usage)
+[ראו דוגמאות נוספות בהמשך.](#usage)
 
 #### Parameters {/*parameters*/}
 
 
-* `callback`: A function. React will immediately call this callback and flush any updates it contains synchronously. It may also flush any pending updates, or Effects, or updates inside of Effects. If an update suspends as a result of this `flushSync` call, the fallbacks may be re-shown.
+* `callback`: פונקציה. React תקרא ל-callback הזה מיד ותבצע flush סינכרוני לכל עדכון שהוא מכיל. ייתכן שיבוצע flush גם לעדכונים ממתינים, ל-Effects, או לעדכונים מתוך Effects. אם עדכון מבצע suspend כתוצאה מקריאת `flushSync`, ייתכן שה-fallbacks יוצגו שוב.
 
 #### Returns {/*returns*/}
 
-`flushSync` returns `undefined`.
+`flushSync` מחזירה `undefined`.
 
 #### Caveats {/*caveats*/}
 
-* `flushSync` can significantly hurt performance. Use sparingly.
-* `flushSync` may force pending Suspense boundaries to show their `fallback` state.
-* `flushSync` may run pending effects and synchronously apply any updates they contain before returning.
-* `flushSync` may flush updates outside the callback when necessary to flush the updates inside the callback. For example, if there are pending updates from a click, React may flush those before flushing the updates inside the callback.
+* `flushSync` יכולה לפגוע משמעותית בביצועים. להשתמש במשורה.
+* `flushSync` עשויה לאלץ גבולות Suspense ממתינים להציג את מצב ה-`fallback` שלהם.
+* `flushSync` עשויה להריץ effects ממתינים ולהחיל באופן סינכרוני כל עדכון שהם מכילים לפני החזרה.
+* `flushSync` עשויה לבצע flush לעדכונים מחוץ ל-callback כשנדרש כדי לבצע flush לעדכונים שבתוך ה-callback. לדוגמה, אם יש עדכונים ממתינים מקליק, React עשויה לבצע להם flush לפני ה-flush לעדכונים שבתוך ה-callback.
 
 ---
 
-## Usage {/*usage*/}
+## שימוש {/*usage*/}
 
-### Flushing updates for third-party integrations {/*flushing-updates-for-third-party-integrations*/}
+### ביצוע flush לעדכונים עבור אינטגרציות צד שלישי {/*flushing-updates-for-third-party-integrations*/}
 
-When integrating with third-party code such as browser APIs or UI libraries, it may be necessary to force React to flush updates. Use `flushSync` to force React to flush any <CodeStep step={1}>state updates</CodeStep> inside the callback synchronously:
+בעת אינטגרציה עם קוד צד שלישי כמו APIs של דפדפן או ספריות UI, לעיתים נדרש לאלץ את React לבצע flush לעדכונים. השתמשו ב-`flushSync` כדי לאלץ את React לבצע flush סינכרוני לכל <CodeStep step={1}>עדכון state</CodeStep> בתוך ה-callback:
 
 ```js [[1, 2, "setSomething(123)"]]
 flushSync(() => {
@@ -71,15 +71,15 @@ flushSync(() => {
 // By this line, the DOM is updated.
 ```
 
-This ensures that, by the time the next line of code runs, React has already updated the DOM.
+כך מובטח שעד שהשורה הבאה בקוד רצה, React כבר עדכנה את ה-DOM.
 
-**Using `flushSync` is uncommon, and using it often can significantly hurt the performance of your app.** If your app only uses React APIs, and does not integrate with third-party libraries, `flushSync` should be unnecessary.
+**שימוש ב-`flushSync` אינו נפוץ, ושימוש תכוף בה עלול לפגוע משמעותית בביצועים של האפליקציה.** אם האפליקציה שלכם משתמשת רק ב-React APIs, ולא מבצעת אינטגרציה עם ספריות צד שלישי, לרוב `flushSync` לא נדרשת.
 
-However, it can be helpful for integrating with third-party code like browser APIs.
+עם זאת, היא יכולה להיות שימושית לאינטגרציה עם קוד צד שלישי כמו APIs של דפדפן.
 
-Some browser APIs expect results inside of callbacks to be written to the DOM synchronously, by the end of the callback, so the browser can do something with the rendered DOM. In most cases, React handles this for you automatically. But in some cases it may be necessary to force a synchronous update.
+חלק מ-APIs של דפדפן מצפים שתוצאות בתוך callbacks ייכתבו ל-DOM בצורה סינכרונית עד סוף ה-callback, כדי שהדפדפן יוכל לפעול על ה-DOM המרונדר. ברוב המקרים React מטפלת בזה אוטומטית. אבל במקרים מסוימים ייתכן שיהיה צורך לאלץ עדכון סינכרוני.
 
-For example, the browser `onbeforeprint` API allows you to change the page immediately before the print dialog opens. This is useful for applying custom print styles that allow the document to display better for printing. In the example below, you use `flushSync` inside of the `onbeforeprint` callback to immediately "flush" the React state to the DOM. Then, by the time the print dialog opens, `isPrinting` displays "yes":
+לדוגמה, ה-API של הדפדפן `onbeforeprint` מאפשר לשנות את העמוד רגע לפני שנפתח חלון ההדפסה. זה שימושי ליישום סגנונות הדפסה מותאמים אישית שמשפרים את תצוגת המסמך להדפסה. בדוגמה הבאה משתמשים ב-`flushSync` בתוך ה-callback של `onbeforeprint` כדי לבצע "flush" מיידי של state של React ל-DOM. כך, בזמן שחלון ההדפסה נפתח, `isPrinting` מוצג כ-"yes":
 
 <Sandpack>
 
@@ -122,12 +122,12 @@ export default function PrintApp() {
 
 </Sandpack>
 
-Without `flushSync`, the print dialog will display `isPrinting` as "no". This is because React batches the updates asynchronously and the print dialog is displayed before the state is updated.
+בלי `flushSync`, חלון ההדפסה יציג `isPrinting` כ-"no". הסיבה היא ש-React מאגדת עדכונים באופן אסינכרוני וחלון ההדפסה מוצג לפני שה-state מתעדכן.
 
 <Pitfall>
 
-`flushSync` can significantly hurt performance, and may unexpectedly force pending Suspense boundaries to show their fallback state.
+`flushSync` יכולה לפגוע משמעותית בביצועים, ועלולה באופן בלתי צפוי לאלץ גבולות Suspense ממתינים להציג את מצב ה-fallback שלהם.
 
-Most of the time, `flushSync` can be avoided, so use `flushSync` as a last resort.
+ברוב הזמן אפשר להימנע מ-`flushSync`, לכן השתמשו בה כמוצא אחרון.
 
 </Pitfall>

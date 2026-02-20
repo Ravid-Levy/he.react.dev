@@ -4,7 +4,7 @@ title: createContext
 
 <Intro>
 
-`createContext` lets you create a [context](/learn/passing-data-deeply-with-context) that components can provide or read.
+`createContext` מאפשרת ליצור [context](/learn/passing-data-deeply-with-context) שקומפוננטות יכולות לספק או לקרוא.
 
 ```js
 const SomeContext = createContext(defaultValue)
@@ -20,7 +20,7 @@ const SomeContext = createContext(defaultValue)
 
 ### `createContext(defaultValue)` {/*createcontext*/}
 
-Call `createContext` outside of any components to create a context.
+קראו ל-`createContext` מחוץ לכל קומפוננטה כדי ליצור context.
 
 ```js
 import { createContext } from 'react';
@@ -28,26 +28,26 @@ import { createContext } from 'react';
 const ThemeContext = createContext('light');
 ```
 
-[See more examples below.](#usage)
+[ראו דוגמאות נוספות בהמשך.](#usage)
 
 #### Parameters {/*parameters*/}
 
-* `defaultValue`: The value that you want the context to have when there is no matching context provider in the tree above the component that reads context. If you don't have any meaningful default value, specify `null`. The default value is meant as a "last resort" fallback. It is static and never changes over time.
+* `defaultValue`: הערך שתרצו של-context יהיה כשאין context provider תואם בעץ מעל הקומפוננטה שקוראת את ה-context. אם אין לכם ערך ברירת מחדל משמעותי, ציינו `null`. ערך ברירת המחדל מיועד כ-fallback של "מוצא אחרון". הוא סטטי ולעולם לא משתנה לאורך הזמן.
 
 #### Returns {/*returns*/}
 
-`createContext` returns a context object.
+`createContext` מחזירה אובייקט context.
 
-**The context object itself does not hold any information.** It represents _which_ context other components read or provide. Typically, you will use [`SomeContext.Provider`](#provider) in components above to specify the context value, and call [`useContext(SomeContext)`](/reference/react/useContext) in components below to read it. The context object has a few properties:
+**אובייקט ה-context עצמו לא מחזיק מידע.** הוא מייצג *איזה* context קומפוננטות אחרות קוראות או מספקות. בדרך כלל תשתמשו ב-[`SomeContext.Provider`](#provider) בקומפוננטות למעלה כדי לציין את ערך ה-context, ותקראו ל-[`useContext(SomeContext)`](/reference/react/useContext) בקומפוננטות למטה כדי לקרוא אותו. לאובייקט ה-context יש כמה מאפיינים:
 
-* `SomeContext.Provider` lets you provide the context value to components.
-* `SomeContext.Consumer` is an alternative and rarely used way to read the context value.
+* `SomeContext.Provider` מאפשר לספק את ערך ה-context לקומפוננטות.
+* `SomeContext.Consumer` הוא דרך חלופית ונדירה לקרוא את ערך ה-context.
 
 ---
 
 ### `SomeContext.Provider` {/*provider*/}
 
-Wrap your components into a context provider to specify the value of this context for all components inside:
+עטפו את הקומפוננטות שלכם ב-context provider כדי לציין את ערך ה-context הזה לכל הקומפוננטות בתוכו:
 
 ```js
 function App() {
@@ -63,13 +63,13 @@ function App() {
 
 #### Props {/*provider-props*/}
 
-* `value`: The value that you want to pass to all the components reading this context inside this provider, no matter how deep. The context value can be of any type. A component calling [`useContext(SomeContext)`](/reference/react/useContext) inside of the provider receives the `value` of the innermost corresponding context provider above it.
+* `value`: הערך שברצונכם להעביר לכל הקומפוננטות שקוראות את ה-context הזה בתוך ה-provider הזה, לא משנה כמה עמוק. ערך ה-context יכול להיות מכל סוג. קומפוננטה שקוראת ל-[`useContext(SomeContext)`](/reference/react/useContext) בתוך ה-provider תקבל את ה-`value` של ה-context provider התואם הפנימי ביותר שמעליה.
 
 ---
 
 ### `SomeContext.Consumer` {/*consumer*/}
 
-Before `useContext` existed, there was an older way to read context:
+לפני ש-`useContext` הייתה קיימת, הייתה דרך ישנה יותר לקרוא context:
 
 ```js
 function Button() {
@@ -84,7 +84,7 @@ function Button() {
 }
 ```
 
-Although this older way still works, but **newly written code should read context with [`useContext()`](/reference/react/useContext) instead:**
+למרות שהדרך הישנה הזו עדיין עובדת, **קוד חדש צריך לקרוא context בעזרת [`useContext()`](/reference/react/useContext) במקום:**
 
 ```js
 function Button() {
@@ -96,17 +96,17 @@ function Button() {
 
 #### Props {/*consumer-props*/}
 
-* `children`: A function. React will call the function you pass with the current context value determined by the same algorithm as [`useContext()`](/reference/react/useContext) does, and render the result you return from this function. React will also re-run this function and update the UI whenever the context from the parent components changes.
+* `children`: פונקציה. React תקרא לפונקציה שתעבירו עם ערך ה-context הנוכחי שנקבע על ידי אותו אלגוריתם שבו משתמשת [`useContext()`](/reference/react/useContext), ותרנדר את התוצאה שתחזירו מהפונקציה הזו. React גם תריץ את הפונקציה הזו שוב ותעדכן את ה-UI בכל פעם שה-context מהקומפוננטות ההורה משתנה.
 
 ---
 
-## Usage {/*usage*/}
+## שימוש {/*usage*/}
 
-### Creating context {/*creating-context*/}
+### יצירת context {/*creating-context*/}
 
-Context lets components [pass information deep down](/learn/passing-data-deeply-with-context) without explicitly passing props.
+Context מאפשר לקומפוננטות [להעביר מידע עמוק יותר בעץ](/learn/passing-data-deeply-with-context) בלי להעביר props במפורש.
 
-Call `createContext` outside any components to create one or more contexts.
+קראו ל-`createContext` מחוץ לכל קומפוננטה כדי ליצור context אחד או יותר.
 
 ```js [[1, 3, "ThemeContext"], [1, 4, "AuthContext"], [3, 3, "'light'"], [3, 4, "null"]]
 import { createContext } from 'react';
@@ -115,7 +115,7 @@ const ThemeContext = createContext('light');
 const AuthContext = createContext(null);
 ```
 
-`createContext` returns a <CodeStep step={1}>context object</CodeStep>. Components can read context by passing it to [`useContext()`](/reference/react/useContext):
+`createContext` מחזירה <CodeStep step={1}>אובייקט context</CodeStep>. קומפוננטות יכולות לקרוא context על ידי העברתו ל-[`useContext()`](/reference/react/useContext):
 
 ```js [[1, 2, "ThemeContext"], [1, 7, "AuthContext"]]
 function Button() {
@@ -129,9 +129,9 @@ function Profile() {
 }
 ```
 
-By default, the values they receive will be the <CodeStep step={3}>default values</CodeStep> you have specified when creating the contexts. However, by itself this isn't useful because the default values never change.
+כברירת מחדל, הערכים שהן יקבלו יהיו <CodeStep step={3}>ערכי ברירת המחדל</CodeStep> שציינתם בעת יצירת ה-context. אבל בפני עצמו זה לא שימושי, כי ערכי ברירת המחדל לעולם לא משתנים.
 
-Context is useful because you can **provide other, dynamic values from your components:**
+Context שימושי כי אפשר **לספק ערכים אחרים, דינמיים, מתוך הקומפוננטות שלכם:**
 
 ```js {8-9,11-12}
 function App() {
@@ -150,15 +150,15 @@ function App() {
 }
 ```
 
-Now the `Page` component and any components inside it, no matter how deep, will "see" the passed context values. If the passed context values change, React will re-render the components reading the context as well.
+עכשיו קומפוננטת `Page` וכל קומפוננטה בתוכה, לא משנה כמה עמוק, "יראו" את ערכי ה-context שהועברו. אם ערכי ה-context משתנים, React תרנדר מחדש גם את הקומפוננטות שקוראות את ה-context.
 
-[Read more about reading and providing context and see examples.](/reference/react/useContext)
+[קראו עוד על קריאה וסיפוק context וראו דוגמאות.](/reference/react/useContext)
 
 ---
 
-### Importing and exporting context from a file {/*importing-and-exporting-context-from-a-file*/}
+### ייבוא וייצוא context מקובץ {/*importing-and-exporting-context-from-a-file*/}
 
-Often, components in different files will need access to the same context. This is why it's common to declare contexts in a separate file. Then you can use the [`export` statement](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export) to make context available for other files:
+לעיתים קרובות קומפוננטות בקבצים שונים צריכות גישה לאותו context. לכן מקובל להצהיר על contexts בקובץ נפרד. לאחר מכן אפשר להשתמש ב-[`export` statement](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export) כדי להפוך את ה-context לזמין לקבצים אחרים:
 
 ```js {4-5}
 // Contexts.js
@@ -168,7 +168,7 @@ export const ThemeContext = createContext('light');
 export const AuthContext = createContext(null);
 ```
 
-Components declared in other files can then use the [`import`](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/import) statement to read or provide this context:
+קומפוננטות שמוצהרות בקבצים אחרים יכולות להשתמש ב-[`import`](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/import) כדי לקרוא או לספק את ה-context הזה:
 
 ```js {2}
 // Button.js
@@ -196,22 +196,21 @@ function App() {
 }
 ```
 
-This works similar to [importing and exporting components.](/learn/importing-and-exporting-components)
+זה עובד בדומה ל-[ייבוא וייצוא קומפוננטות.](/learn/importing-and-exporting-components)
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## פתרון תקלות {/*troubleshooting*/}
 
-### I can't find a way to change the context value {/*i-cant-find-a-way-to-change-the-context-value*/}
+### אני לא מוצא דרך לשנות את ערך ה-context {/*i-cant-find-a-way-to-change-the-context-value*/}
 
 
-Code like this specifies the *default* context value:
+קוד כזה מציין את ערך ה-context *ברירת המחדל*:
 
 ```js
 const ThemeContext = createContext('light');
 ```
 
-This value never changes. React only uses this value as a fallback if it can't find a matching provider above.
+הערך הזה לעולם לא משתנה. React משתמשת בו רק כ-fallback אם היא לא מוצאת provider תואם מעל.
 
-To make context change over time, [add state and wrap components in a context provider.](/reference/react/useContext#updating-data-passed-via-context)
-
+כדי לגרום ל-context להשתנות לאורך הזמן, [הוסיפו state ועטפו קומפוננטות ב-context provider.](/reference/react/useContext#updating-data-passed-via-context)

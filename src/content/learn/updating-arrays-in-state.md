@@ -1,5 +1,5 @@
 ---
-title: Updating Arrays in State
+title: עדכון מערכים ב-State
 ---
 
 <Intro>
@@ -1970,3 +1970,4 @@ With Immer, you can pick the style that feels the most natural for each separate
 </Solution>
 
 </Challenges>
+

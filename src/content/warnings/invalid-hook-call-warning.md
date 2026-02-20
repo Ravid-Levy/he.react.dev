@@ -1,8 +1,8 @@
 ---
-title: Rules of Hooks
+title: כללי Hooks
 ---
 
-You are probably here because you got the following error message:
+כנראה הגעתם לכאן כי קיבלתם את הודעת השגיאה הבאה:
 
 <ConsoleBlock level="error">
 
@@ -10,22 +10,22 @@ Hooks can only be called inside the body of a function component.
 
 </ConsoleBlock>
 
-There are three common reasons you might be seeing it:
+יש שלוש סיבות נפוצות לכך:
 
-1. You might be **breaking the Rules of Hooks**.
-2. You might have **mismatching versions** of React and React DOM.
-3. You might have **more than one copy of React** in the same app.
+1. ייתכן שאתם **מפרים את כללי Hooks**.
+2. ייתכן שיש לכם **גרסאות לא תואמות** של React ו-React DOM.
+3. ייתכן שיש לכם **יותר מעותק אחד של React** באותה אפליקציה.
 
-Let's look at each of these cases.
+בואו נעבור על כל אחד מהמקרים.
 
-## Breaking Rules of Hooks {/*breaking-rules-of-hooks*/}
+## הפרת כללי Hooks {/*breaking-rules-of-hooks*/}
 
-Functions whose names start with `use` are called [*Hooks*](/reference/react) in React.
+פונקציות שהשם שלהן מתחיל ב-`use` נקראות [*Hooks*](/reference/react) ב-React.
 
-**Don’t call Hooks inside loops, conditions, or nested functions.** Instead, always use Hooks at the top level of your React function, before any early returns. You can only call Hooks while React is rendering a function component:
+**אל תקראו ל-Hooks בתוך לולאות, תנאים או פונקציות מקוננות.** במקום זאת, תמיד השתמשו ב-Hooks ברמה העליונה של פונקציית React שלכם, לפני כל early return. אפשר לקרוא ל-Hooks רק בזמן ש-React מרנדר function component:
 
-* ✅ Call them at the top level in the body of a [function component](/learn/your-first-component).
-* ✅ Call them at the top level in the body of a [custom Hook](/learn/reusing-logic-with-custom-hooks).
+* ✅ קראו להם ברמה העליונה בגוף של [function component](/learn/your-first-component).
+* ✅ קראו להם ברמה העליונה בגוף של [custom Hook](/learn/reusing-logic-with-custom-hooks).
 
 ```js{2-3,8-9}
 function Counter() {
@@ -41,15 +41,15 @@ function useWindowWidth() {
 }
 ```
 
-It’s **not** supported to call Hooks (functions starting with `use`) in any other cases, for example:
+**לא** נתמך לקרוא ל-Hooks (פונקציות שמתחילות ב-`use`) במקרים אחרים, לדוגמה:
 
-* 🔴 Do not call Hooks inside conditions or loops.
-* 🔴 Do not call Hooks after a conditional `return` statement.
-* 🔴 Do not call Hooks in event handlers.
-* 🔴 Do not call Hooks in class components.
-* 🔴 Do not call Hooks inside functions passed to `useMemo`, `useReducer`, or `useEffect`.
+* 🔴 אל תקראו ל-Hooks בתוך תנאים או לולאות.
+* 🔴 אל תקראו ל-Hooks אחרי משפט `return` מותנה.
+* 🔴 אל תקראו ל-Hooks בתוך event handlers.
+* 🔴 אל תקראו ל-Hooks ב-class components.
+* 🔴 אל תקראו ל-Hooks בתוך פונקציות שמועברות ל-`useMemo`, `useReducer`, או `useEffect`.
 
-If you break these rules, you might see this error.
+אם תפרו את הכללים האלה, ייתכן שתראו את השגיאה הזו.
 
 ```js{3-4,11-12,20-21}
 function Bad({ cond }) {
@@ -103,25 +103,25 @@ class Bad extends React.Component {
 }
 ```
 
-You can use the [`eslint-plugin-react-hooks` plugin](https://www.npmjs.com/package/eslint-plugin-react-hooks) to catch these mistakes.
+אפשר להשתמש ב-[`eslint-plugin-react-hooks` plugin](https://www.npmjs.com/package/eslint-plugin-react-hooks) כדי לזהות טעויות כאלה.
 
 <Note>
 
-[Custom Hooks](/learn/reusing-logic-with-custom-hooks) *may* call other Hooks (that's their whole purpose). This works because custom Hooks are also supposed to only be called while a function component is rendering.
+[Custom Hooks](/learn/reusing-logic-with-custom-hooks) *יכולים* לקרוא ל-Hooks אחרים (זו כל המטרה שלהם). זה עובד כי גם custom Hooks אמורים להיקרא רק בזמן ש-function component מרונדר.
 
 </Note>
 
-## Mismatching Versions of React and React DOM {/*mismatching-versions-of-react-and-react-dom*/}
+## גרסאות לא תואמות של React ו-React DOM {/*mismatching-versions-of-react-and-react-dom*/}
 
-You might be using a version of `react-dom` (< 16.8.0) or `react-native` (< 0.59) that doesn't yet support Hooks. You can run `npm ls react-dom` or `npm ls react-native` in your application folder to check which version you're using. If you find more than one of them, this might also create problems (more on that below).
+ייתכן שאתם משתמשים בגרסה של `react-dom` (פחות מ-16.8.0) או `react-native` (פחות מ-0.59) שעוד לא תומכת ב-Hooks. אפשר להריץ `npm ls react-dom` או `npm ls react-native` בתיקיית האפליקציה כדי לבדוק באיזו גרסה אתם משתמשים. אם אתם מוצאים יותר מאחת, זה עלול ליצור בעיות נוספות (הסבר בהמשך).
 
-## Duplicate React {/*duplicate-react*/}
+## React כפול {/*duplicate-react*/}
 
-In order for Hooks to work, the `react` import from your application code needs to resolve to the same module as the `react` import from inside the `react-dom` package.
+כדי ש-Hooks יעבדו, ה-`react` import מהקוד של האפליקציה צריך להיפתר לאותו מודול כמו ה-`react` import מתוך החבילה `react-dom`.
 
-If these `react` imports resolve to two different exports objects, you will see this warning. This may happen if you **accidentally end up with two copies** of the `react` package.
+אם שני ה-imports האלה של `react` נפתרים לשני export objects שונים, תראו את האזהרה הזאת. זה יכול לקרות אם **בטעות יש לכם שני עותקים** של החבילה `react`.
 
-If you use Node for package management, you can run this check in your project folder:
+אם אתם משתמשים ב-Node לניהול חבילות, אפשר להריץ את הבדיקה הבאה בתיקיית הפרויקט:
 
 <TerminalBlock>
 
@@ -129,9 +129,9 @@ npm ls react
 
 </TerminalBlock>
 
-If you see more than one React, you'll need to figure out why this happens and fix your dependency tree. For example, maybe a library you're using incorrectly specifies `react` as a dependency (rather than a peer dependency). Until that library is fixed, [Yarn resolutions](https://yarnpkg.com/lang/en/docs/selective-version-resolutions/) is one possible workaround.
+אם מופיעים יותר מעותק אחד של React, תצטרכו להבין למה זה קורה ולתקן את dependency tree. לדוגמה, ייתכן שספרייה שאתם משתמשים בה הגדירה את `react` כתלות רגילה במקום peer dependency. עד שהספרייה תתוקן, [Yarn resolutions](https://yarnpkg.com/lang/en/docs/selective-version-resolutions/) היא דרך אפשרית לעקיפה.
 
-You can also try to debug this problem by adding some logs and restarting your development server:
+אפשר גם לנסות לדבג את הבעיה הזו על ידי הוספת לוגים והפעלה מחדש של שרת הפיתוח:
 
 ```js
 // Add this in node_modules/react-dom/index.js
@@ -143,16 +143,16 @@ window.React2 = require('react');
 console.log(window.React1 === window.React2);
 ```
 
-If it prints `false` then you might have two Reacts and need to figure out why that happened. [This issue](https://github.com/facebook/react/issues/13991) includes some common reasons encountered by the community.
+אם יודפס `false`, כנראה שיש לכם שני עותקים של React וצריך לברר למה זה קרה. ב-[issue הזה](https://github.com/facebook/react/issues/13991) יש סיבות נפוצות שהקהילה נתקלה בהן.
 
-This problem can also come up when you use `npm link` or an equivalent. In that case, your bundler might "see" two Reacts — one in application folder and one in your library folder. Assuming `myapp` and `mylib` are sibling folders, one possible fix is to run `npm link ../myapp/node_modules/react` from `mylib`. This should make the library use the application's React copy.
+הבעיה הזו יכולה להופיע גם כשמשתמשים ב-`npm link` או מקבילה שלו. במצב כזה ה-bundler עשוי "לראות" שני עותקים של React - אחד בתיקיית האפליקציה ואחד בתיקיית הספרייה. בהנחה ש-`myapp` ו-`mylib` הן תיקיות אחיות, פתרון אפשרי הוא להריץ `npm link ../myapp/node_modules/react` מתוך `mylib`. זה אמור לגרום לספרייה להשתמש בעותק React של האפליקציה.
 
 <Note>
 
-In general, React supports using multiple independent copies on one page (for example, if an app and a third-party widget both use it). It only breaks if `require('react')` resolves differently between the component and the `react-dom` copy it was rendered with.
+באופן כללי, React תומכת בכמה עותקים עצמאיים באותו עמוד (לדוגמה, אפליקציה ו-widget צד שלישי שמשתמשים בה במקביל). זה נשבר רק אם `require('react')` נפתר אחרת בין הקומפוננטה לבין העותק של `react-dom` שאיתו היא רונדרה.
 
 </Note>
 
-## Other Causes {/*other-causes*/}
+## סיבות נוספות {/*other-causes*/}
 
-If none of this worked, please comment in [this issue](https://github.com/facebook/react/issues/13991) and we'll try to help. Try to create a small reproducing example — you might discover the problem as you're doing it.
+אם שום דבר מזה לא עזר, אנא הוסיפו תגובה ב-[issue הזה](https://github.com/facebook/react/issues/13991) וננסה לעזור. מומלץ ליצור דוגמת שחזור קטנה - הרבה פעמים מגלים את הבעיה כבר בתהליך יצירת הדוגמה.

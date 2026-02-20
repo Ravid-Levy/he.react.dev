@@ -4,15 +4,15 @@ title: unmountComponentAtNode
 
 <Deprecated>
 
-This API will be removed in a future major version of React.
+ה-API הזה יוסר בגרסה ראשית עתידית של React.
 
-In React 18, `unmountComponentAtNode` was replaced by [`root.unmount()`](/reference/react-dom/client/createRoot#root-unmount).
+ב-React 18, `unmountComponentAtNode` הוחלפה ב-[`root.unmount()`](/reference/react-dom/client/createRoot#root-unmount).
 
 </Deprecated>
 
 <Intro>
 
-`unmountComponentAtNode` removes a mounted React component from the DOM.
+`unmountComponentAtNode` מסירה קומפוננטת React שהורכבה מה-DOM.
 
 ```js
 unmountComponentAtNode(domNode)
@@ -28,7 +28,7 @@ unmountComponentAtNode(domNode)
 
 ### `unmountComponentAtNode(domNode)` {/*unmountcomponentatnode*/}
 
-Call `unmountComponentAtNode` to remove a mounted React component from the DOM and clean up its event handlers and state.
+קראו ל-`unmountComponentAtNode` כדי להסיר קומפוננטת React שהורכבה מה-DOM ולנקות את event handlers וה-state שלה.
 
 ```js
 import { unmountComponentAtNode } from 'react-dom';
@@ -39,21 +39,21 @@ render(<App />, domNode);
 unmountComponentAtNode(domNode);
 ```
 
-[See more examples below.](#usage)
+[ראו דוגמאות נוספות בהמשך.](#usage)
 
 #### Parameters {/*parameters*/}
 
-* `domNode`: A [DOM element.](https://developer.mozilla.org/en-US/docs/Web/API/Element) React will remove a mounted React component from this element.
+* `domNode`: [אלמנט DOM.](https://developer.mozilla.org/en-US/docs/Web/API/Element) React תסיר ממנו קומפוננטת React שהורכבה.
 
 #### Returns {/*returns*/}
 
-`unmountComponentAtNode` returns `true` if a component was unmounted and `false` otherwise.
+`unmountComponentAtNode` מחזירה `true` אם קומפוננטה הוסרה ו-`false` אחרת.
 
 ---
 
-## Usage {/*usage*/}
+## שימוש {/*usage*/}
 
-Call `unmountComponentAtNode` to remove a <CodeStep step={1}>mounted React component</CodeStep> from a <CodeStep step={2}>browser DOM node</CodeStep> and clean up its event handlers and state.
+קראו ל-`unmountComponentAtNode` כדי להסיר <CodeStep step={1}>קומפוננטת React שהורכבה</CodeStep> מ-<CodeStep step={2}>DOM node בדפדפן</CodeStep>, ולנקות את event handlers וה-state שלה.
 
 ```js [[1, 5, "<App />"], [2, 5, "rootNode"], [2, 8, "rootNode"]]
 import { render, unmountComponentAtNode } from 'react-dom';
@@ -67,11 +67,11 @@ unmountComponentAtNode(rootNode);
 ```
 
 
-### Removing a React app from a DOM element {/*removing-a-react-app-from-a-dom-element*/}
+### הסרת אפליקציית React מאלמנט DOM {/*removing-a-react-app-from-a-dom-element*/}
 
-Occasionally, you may want to "sprinkle" React on an existing page, or a page that is not fully written in React. In those cases, you may need to "stop" the React app, by removing all of the UI, state, and listeners from the DOM node it was rendered to.
+לעיתים תרצו "לפזר" React בתוך עמוד קיים, או עמוד שלא נכתב כולו ב-React. במקרים כאלה ייתכן שתצטרכו "לעצור" את אפליקציית React, על ידי הסרת כל ה-UI, ה-state וה-listeners מה-DOM node שאליו היא רונדרה.
 
-In this example, clicking "Render React App" will render a React app. Click "Unmount React App" to destroy it:
+בדוגמה הזו, לחיצה על "Render React App" תרנדר אפליקציית React. לחצו על "Unmount React App" כדי להשמיד אותה:
 
 <Sandpack>
 

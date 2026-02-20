@@ -5,14 +5,14 @@ canary: true
 
 <Canary>
 
-React's extensions to `<meta>` are currently only available in React's canary and experimental channels. In stable releases of React `<meta>` works only as a [built-in browser HTML component](https://react.dev/reference/react-dom/components#all-html-components). Learn more about [React's release channels here](/community/versioning-policy#all-release-channels).
+ההרחבות של React ל-`<meta>` זמינות כרגע רק בערוצי canary ו-experimental של React. בגרסאות יציבות של React, `<meta>` פועל רק כ-[רכיב HTML מובנה של הדפדפן](https://react.dev/reference/react-dom/components#all-html-components). מידע נוסף ב-[ערוצי השחרור של React](/community/versioning-policy#all-release-channels).
 
 </Canary>
 
 
 <Intro>
 
-The [built-in browser `<meta>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) lets you add metadata to the document.
+רכיב הדפדפן המובנה [`<meta>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) מאפשר להוסיף metadata למסמך.
 
 ```js
 <meta name="keywords" content="React, JavaScript, semantic markup, html" />
@@ -28,39 +28,39 @@ The [built-in browser `<meta>` component](https://developer.mozilla.org/en-US/do
 
 ### `<meta>` {/*meta*/}
 
-To add document metadata, render the [built-in browser `<meta>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta). You can render `<meta>` from any component and React will always place the corresponding DOM element in the document head.
+כדי להוסיף metadata למסמך, רנדרו את רכיב הדפדפן המובנה [`<meta>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta). אפשר לרנדר `<meta>` מכל קומפוננטה ו-React תמיד תמקם את אלמנט ה-DOM המתאים בתוך ה-document head.
 
 ```js
 <meta name="keywords" content="React, JavaScript, semantic markup, html" />
 ```
 
-[See more examples below.](#usage)
+[ראו דוגמאות נוספות בהמשך.](#usage)
 
 #### Props {/*props*/}
 
-`<meta>` supports all [common element props.](/reference/react-dom/components/common#props)
+`<meta>` תומך בכל [מאפייני האלמנט הנפוצים.](/reference/react-dom/components/common#props)
 
-It should have *exactly one* of the following props: `name`, `httpEquiv`, `charset`, `itemProp`. The `<meta>` component does something different depending on which of these props is specified.
+הוא צריך לקבל *בדיוק אחד* מה-props הבאים: `name`, `httpEquiv`, `charset`, `itemProp`. רכיב `<meta>` פועל אחרת בהתאם ל-prop שמצוין.
 
-* `name`: a string. Specifies the [kind of metadata](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name) to be attached to the document. 
-* `charset`: a string. Specifies the character set used by the document. The only valid value is `"utf-8"`.
-* `httpEquiv`: a string. Specifies a directive for processing the document.
-* `itemProp`: a string. Specifies metadata about a particular item within the document rather than the document as a whole.
-* `content`: a string. Specifies the metadata to be attached when used with the `name` or `itemProp` props or the behavior of the directive when used with the `httpEquiv` prop.
+* `name`: מחרוזת. מציינת את [סוג ה-metadata](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name) שיצורף למסמך.
+* `charset`: מחרוזת. מציינת את קידוד התווים של המסמך. הערך התקין היחיד הוא `"utf-8"`.
+* `httpEquiv`: מחרוזת. מציינת directive לעיבוד המסמך.
+* `itemProp`: מחרוזת. מציינת metadata על פריט מסוים בתוך המסמך, ולא על המסמך כולו.
+* `content`: מחרוזת. מציינת את ה-metadata לצירוף כשמשתמשים ב-`name` או `itemProp`, או את התנהגות ה-directive כשמשתמשים ב-`httpEquiv`.
 
-#### Special rendering behavior {/*special-rendering-behavior*/}
+#### התנהגות רינדור מיוחדת {/*special-rendering-behavior*/}
 
-React will always place the DOM element corresponding to the `<meta>` component within the document’s `<head>`, regardless of where in the React tree it is rendered. The `<head>` is the only valid place for `<meta>` to exist within the DOM, yet it’s convenient and keeps things composable if a component representing a specific page can render `<meta>` components itself. 
+React תמיד תמקם את אלמנט ה-DOM המתאים ל-`<meta>` בתוך `<head>` של המסמך, בלי קשר למקום שבו הוא מרונדר בעץ React. `<head>` הוא המקום החוקי היחיד ל-`<meta>` בתוך ה-DOM, ובכל זאת זה נוח ושומר על קומפוזביליות אם קומפוננטה שמייצגת עמוד מסוים יכולה לרנדר בעצמה רכיבי `<meta>`.
 
-There is one exception to this: if `<meta>` has an [`itemProp`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/itemprop) prop, there is no special behavior, because in this case it doesn’t represent metadata about the document but rather metadata about a specific part of the page. 
+יש חריג אחד לכך: אם ל-`<meta>` יש prop מסוג [`itemProp`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/itemprop), אין התנהגות מיוחדת, כי במקרה הזה הוא לא מייצג metadata על המסמך אלא metadata על חלק מסוים של העמוד.
 
 ---
 
-## Usage {/*usage*/}
+## שימוש {/*usage*/}
 
-### Annotating the document with metadata {/*annotating-the-document-with-metadata*/}
+### הוספת metadata למסמך {/*annotating-the-document-with-metadata*/}
 
-You can annotate the document with metadata such as keywords, a summary, or the author’s name. React will place this metadata within the document `<head>` regardless of where in the React tree it is rendered. 
+אפשר להוסיף למסמך metadata כמו מילות מפתח, תקציר או שם המחבר. React תמקם את ה-metadata הזו בתוך `<head>` של המסמך, בלי קשר למקום שבו הוא מרונדר בעץ React.
 
 ```html
 <meta name="author" content="John Smith" />
@@ -68,7 +68,7 @@ You can annotate the document with metadata such as keywords, a summary, or the 
 <meta name="description" content="API reference for the <meta> component in React DOM" />
 ```
 
-You can render the `<meta>` component from any component. React will put a `<meta>` DOM node in the document `<head>`.
+אפשר לרנדר את רכיב `<meta>` מכל קומפוננטה. React תשים DOM node של `<meta>` בתוך `<head>` של המסמך.
 
 <SandpackWithHTMLOutput>
 
@@ -89,9 +89,9 @@ export default function SiteMapPage() {
 
 </SandpackWithHTMLOutput>
 
-### Annotating specific items within the document with metadata {/*annotating-specific-items-within-the-document-with-metadata*/}
+### הוספת metadata לפריטים ספציפיים במסמך {/*annotating-specific-items-within-the-document-with-metadata*/}
 
-You can use the `<meta>` component with the `itemProp` prop to annotate specific items within the document with metadata. In this case, React will *not* place these annotations within the document `<head>` but will place them like any other React component. 
+אפשר להשתמש ברכיב `<meta>` עם prop מסוג `itemProp` כדי להוסיף metadata לפריטים ספציפיים בתוך המסמך. במקרה כזה, React *לא* תמקם את ההערות האלה בתוך `<head>` של המסמך, אלא תמקם אותן כמו כל קומפוננטת React אחרת.
 
 ```js
 <section itemScope>

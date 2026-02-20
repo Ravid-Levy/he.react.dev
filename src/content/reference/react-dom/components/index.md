@@ -4,37 +4,37 @@ title: "React DOM Components"
 
 <Intro>
 
-React supports all of the browser built-in [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) and [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Element) components.
+React תומכת בכל רכיבי הדפדפן המובנים של [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) ושל [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Element).
 
 </Intro>
 
 ---
 
-## Common components {/*common-components*/}
+## רכיבים נפוצים {/*common-components*/}
 
-All of the built-in browser components support some props and events.
+כל רכיבי הדפדפן המובנים תומכים בחלק מה-props ובאירועים.
 
-* [Common components (e.g. `<div>`)](/reference/react-dom/components/common)
+* [רכיבים נפוצים (למשל `<div>`)](/reference/react-dom/components/common)
 
-This includes React-specific props like `ref` and `dangerouslySetInnerHTML`.
+זה כולל גם props ייחודיים ל-React כמו `ref` ו-`dangerouslySetInnerHTML`.
 
 ---
 
-## Form components {/*form-components*/}
+## רכיבי טפסים {/*form-components*/}
 
-These built-in browser components accept user input:
+רכיבי הדפדפן המובנים הבאים מקבלים קלט מהמשתמש:
 
 * [`<input>`](/reference/react-dom/components/input)
 * [`<select>`](/reference/react-dom/components/select)
 * [`<textarea>`](/reference/react-dom/components/textarea)
 
-They are special in React because passing the `value` prop to them makes them *[controlled.](/reference/react-dom/components/input#controlling-an-input-with-a-state-variable)*
+הם מיוחדים ב-React כי העברת prop בשם `value` אליהם הופכת אותם ל-* [controlled.](/reference/react-dom/components/input#controlling-an-input-with-a-state-variable)*
 
 ---
 
-## Resource and Metadata Components {/*resource-and-metadata-components*/}
+## רכיבי משאבים ומטא-דאטה {/*resource-and-metadata-components*/}
 
-These bulit-in browser components let you load external resources or annotate the document with metadata:
+רכיבי הדפדפן המובנים האלה מאפשרים לטעון משאבים חיצוניים או להוסיף מטא-דאטה למסמך:
 
 * [`<link>`](/reference/react-dom/components/link)
 * [`<meta>`](/reference/react-dom/components/meta)
@@ -42,13 +42,13 @@ These bulit-in browser components let you load external resources or annotate th
 * [`<style>`](/reference/react-dom/components/style)
 * [`<title>`](/reference/react-dom/components/title)
 
-They are special in React because React can render them into the document head, suspend while resources are loading, and enact other behaviors that are described on the reference page for each specific component.
+הם מיוחדים ב-React כי React יכולה לרנדר אותם ל-head של המסמך, לבצע suspend בזמן טעינת משאבים, ולהפעיל התנהגויות נוספות שמתוארות בדף ה-reference של כל רכיב.
 
 ---
 
-## All HTML components {/*all-html-components*/}
+## כל רכיבי ה-HTML {/*all-html-components*/}
 
-React supports all built-in browser HTML components. This includes:
+React תומכת בכל רכיבי ה-HTML המובנים של הדפדפן. הרשימה כוללת:
 
 * [`<aside>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/aside)
 * [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio)
@@ -154,38 +154,38 @@ React supports all built-in browser HTML components. This includes:
 
 <Note>
 
-Similar to the [DOM standard,](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) React uses a `camelCase` convention for prop names. For example, you'll write `tabIndex` instead of `tabindex`. You can convert existing HTML to JSX with an [online converter.](https://transform.tools/html-to-jsx)
+בדומה ל-[תקן DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model), ב-React משתמשים בקונבנציה של `camelCase` לשמות props. לדוגמה, תכתבו `tabIndex` במקום `tabindex`. אפשר להמיר HTML קיים ל-JSX באמצעות [ממיר אונליין](https://transform.tools/html-to-jsx).
 
 </Note>
 
 ---
 
-### Custom HTML elements {/*custom-html-elements*/}
+### אלמנטים מותאמים אישית של HTML {/*custom-html-elements*/}
 
-If you render a tag with a dash, like `<my-element>`, React will assume you want to render a [custom HTML element.](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) In React, rendering custom elements works differently from rendering built-in browser tags:
+אם תרנדרו תגית עם מקף, כמו `<my-element>`, React תניח שאתם רוצים לרנדר [custom HTML element](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements). ב-React רינדור אלמנטים מותאמים אישית עובד אחרת מרינדור תגיות דפדפן מובנות:
 
-- All custom element props are serialized to strings and are always set using attributes.
-- Custom elements accept `class` rather than `className`, and `for` rather than `htmlFor`.
+- כל props של custom elements עוברים serialization למחרוזות ותמיד נקבעים באמצעות attributes.
+- custom elements מקבלים `class` במקום `className`, ו-`for` במקום `htmlFor`.
 
-If you render a built-in browser HTML element with an [`is`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/is) attribute, it will also be treated as a custom element.
+אם תרנדרו אלמנט HTML מובנה עם attribute בשם [`is`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/is), הוא יטופל גם הוא כ-custom element.
 
 <Note>
 
-[A future version of React will include more comprehensive support for custom elements.](https://github.com/facebook/react/issues/11347#issuecomment-1122275286)
+[גרסה עתידית של React תכלול תמיכה רחבה יותר ב-custom elements.](https://github.com/facebook/react/issues/11347#issuecomment-1122275286)
 
-You can try it by upgrading React packages to the most recent experimental version:
+אפשר לנסות זאת על ידי שדרוג חבילות React לגרסה הניסיונית האחרונה:
 
 - `react@experimental`
 - `react-dom@experimental`
 
-Experimental versions of React may contain bugs. Don't use them in production.
+גרסאות ניסיוניות של React עשויות להכיל באגים. אל תשתמשו בהן בפרודקשן.
 
 </Note>
 ---
 
-## All SVG components {/*all-svg-components*/}
+## כל רכיבי ה-SVG {/*all-svg-components*/}
 
-React supports all built-in browser SVG components. This includes:
+React תומכת בכל רכיבי ה-SVG המובנים של הדפדפן. הרשימה כוללת:
 
 * [`<a>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/a)
 * [`<animate>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate)
@@ -256,20 +256,20 @@ React supports all built-in browser SVG components. This includes:
 
 <Note>
 
-Similar to the [DOM standard,](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) React uses a `camelCase` convention for prop names. For example, you'll write `tabIndex` instead of `tabindex`. You can convert existing SVG to JSX with an [online converter.](https://transform.tools/)
+בדומה ל-[תקן DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model), ב-React משתמשים בקונבנציה של `camelCase` לשמות props. לדוגמה, תכתבו `tabIndex` במקום `tabindex`. אפשר להמיר SVG קיים ל-JSX בעזרת [ממיר אונליין](https://transform.tools/).
 
-Namespaced attributes also have to be written without the colon:
+attributes עם namespace גם חייבים להיכתב בלי נקודתיים:
 
-* `xlink:actuate` becomes `xlinkActuate`.
-* `xlink:arcrole` becomes `xlinkArcrole`.
-* `xlink:href` becomes `xlinkHref`.
-* `xlink:role` becomes `xlinkRole`.
-* `xlink:show` becomes `xlinkShow`.
-* `xlink:title` becomes `xlinkTitle`.
-* `xlink:type` becomes `xlinkType`.
-* `xml:base` becomes `xmlBase`.
-* `xml:lang` becomes `xmlLang`.
-* `xml:space` becomes `xmlSpace`.
-* `xmlns:xlink` becomes `xmlnsXlink`.
+* `xlink:actuate` הופך ל-`xlinkActuate`.
+* `xlink:arcrole` הופך ל-`xlinkArcrole`.
+* `xlink:href` הופך ל-`xlinkHref`.
+* `xlink:role` הופך ל-`xlinkRole`.
+* `xlink:show` הופך ל-`xlinkShow`.
+* `xlink:title` הופך ל-`xlinkTitle`.
+* `xlink:type` הופך ל-`xlinkType`.
+* `xml:base` הופך ל-`xmlBase`.
+* `xml:lang` הופך ל-`xmlLang`.
+* `xml:space` הופך ל-`xmlSpace`.
+* `xmlns:xlink` הופך ל-`xmlnsXlink`.
 
 </Note>

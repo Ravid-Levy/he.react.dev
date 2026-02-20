@@ -1,34 +1,34 @@
 ---
-title: React Reference Overview
+title: סקירת Reference של React
 ---
 
 <Intro>
 
-This section provides detailed reference documentation for working with React. For an introduction to React, please visit the [Learn](/learn) section.
+החלק הזה מספק תיעוד reference מפורט לעבודה עם React. להיכרות עם React, עברו לחלק [Learn](/learn).
 
 </Intro>
 
-The React reference documentation is broken down into functional subsections:
+תיעוד ה-reference של React מחולק לתתי-חלקים פונקציונליים:
 
 ## React {/*react*/}
 
-Programmatic React features:
+יכולות React ברמת API:
 
-* [Hooks](/reference/react/hooks) - Use different React features from your components.
-* [Components](/reference/react/components) - Documents built-in components that you can use in your JSX.
-* [APIs](/reference/react/apis) - APIs that are useful for defining components.
-* [Directives](/reference/react/directives) - Provide instructions to bundlers compatible with React Server Components.
+* [Hooks](/reference/react/hooks) - שימוש ביכולות שונות של React מתוך הקומפוננטות.
+* [Components](/reference/react/components) - תיעוד הקומפוננטות המובנות שאפשר להשתמש בהן ב-JSX.
+* [APIs](/reference/react/apis) - APIs שימושיים להגדרת קומפוננטות.
+* [Directives](/reference/react/directives) - הנחיות ל-bundlers שתואמים ל-React Server Components.
 
 ## React DOM {/*react-dom*/}
 
-React-dom contains features that are only supported for web applications (which run in the browser DOM environment). This section is broken into the following:
+`react-dom` כולל יכולות שנתמכות רק באפליקציות ווב (שרצות בסביבת DOM של הדפדפן). החלק הזה מחולק ל:
 
-* [Hooks](/reference/react-dom/hooks) - Hooks for web applications which run in the browser DOM environment.
-* [Components](/reference/react-dom/components) - React supports all of the browser built-in HTML and SVG components.
-* [APIs](/reference/react-dom) - The `react-dom` package contains methods supported only in web applications.
-* [Client APIs](/reference/react-dom/client) - The `react-dom/client` APIs let you render React components on the client (in the browser).
-* [Server APIs](/reference/react-dom/server) - The `react-dom/server` APIs let you render React components to HTML on the server.
+* [Hooks](/reference/react-dom/hooks) - Hooks לאפליקציות ווב שרצות בסביבת DOM של הדפדפן.
+* [Components](/reference/react-dom/components) - React תומכת בכל רכיבי HTML ו-SVG המובנים בדפדפן.
+* [APIs](/reference/react-dom) - החבילה `react-dom` כוללת מתודות שנתמכות רק באפליקציות ווב.
+* [Client APIs](/reference/react-dom/client) - ה-APIs של `react-dom/client` מאפשרים לרנדר קומפוננטות React בצד לקוח (בדפדפן).
+* [Server APIs](/reference/react-dom/server) - ה-APIs של `react-dom/server` מאפשרים לרנדר קומפוננטות React ל-HTML בצד שרת.
 
 ## Legacy APIs {/*legacy-apis*/}
 
-* [Legacy APIs](/reference/react/legacy) - Exported from the `react` package, but not recommended for use in newly written code.
+* [Legacy APIs](/reference/react/legacy) - מיוצאים מחבילת `react`, אבל לא מומלצים לשימוש בקוד חדש.

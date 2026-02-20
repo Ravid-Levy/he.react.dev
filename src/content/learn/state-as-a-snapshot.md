@@ -1,27 +1,27 @@
 ---
-title: State as a Snapshot
+title: "state כ-Snapshot"
 ---
 
 <Intro>
 
-State variables might look like regular JavaScript variables that you can read and write to. However, state behaves more like a snapshot. Setting it does not change the state variable you already have, but instead triggers a re-render.
+משתני מצב עשויים להיראות כמו משתני JavaScript רגילים שאתה יכול לקרוא ולכתוב אליהם. עם זאת, הstate מתנהגת יותר כמו תמונת מצב. הגדרת זה לא משנה את משתנה הstate שכבר יש לך, אלא מפעילה עיבוד מחדש.
 
 </Intro>
 
 <YouWillLearn>
 
-* How setting state triggers re-renders
-* When and how state updates
-* Why state does not update immediately after you set it
-* How event handlers access a "snapshot" of the state
+* איך הגדרת מצב מפעילה עיבוד מחדש
+* מתי וכיצד עדכוני הstate
+* מדוע הstate לא מתעדכנת מיד לאחר הגדרתו
+* איך מטפלי אירועים ניגשים ל"תמונת מצב" של הstate
 
 </YouWillLearn>
 
-## Setting state triggers renders {/*setting-state-triggers-renders*/}
+## הגדרת מצב מפעילים מעבד {/*setting-state-triggers-renders*/}
 
-You might think of your user interface as changing directly in response to the user event like a click. In React, it works a little differently from this mental model. On the previous page, you saw that [setting state requests a re-render](/learn/render-and-commit#step-1-trigger-a-render) from React. This means that for an interface to react to the event, you need to *update the state*.
+אתה עשוי לחשוב על ממשק המשתמש שלך כמשתנה ישירות בתגובה לאירוע המשתמש כמו קליק. ב-React, זה עובד קצת אחרת מהמודל המנטלי הזה. בעמוד הקודם, ראית ש[הגדרת מצב מבקש עיבוד מחדש](/learn/render-and-commit#step-1-trigger-a-render) מ-React. זה אומר שכדי שממשק יגיב לאירוע, צריך *לעדכן את הstate*.
 
-In this example, when you press "send", `setIsSent(true)` tells React to re-render the UI:
+בדוגמה זו, כאשר אתה לוחץ על "שלח", `setIsSent(true)` אומר ל-React לעבד מחדש את ממשק המשתמש:
 
 <Sandpack>
 
@@ -61,25 +61,25 @@ label, textarea { margin-bottom: 10px; display: block; }
 
 </Sandpack>
 
-Here's what happens when you click the button:
+זה מה שקורה כשאתה לוחץ על הכפתור:
 
-1. The `onSubmit` event handler executes.
-2. `setIsSent(true)` sets `isSent` to `true` and queues a new render.
-3. React re-renders the component according to the new `isSent` value.
+1. המטפל באירוע 'onSubmit' מבצע.
+2. `setIsSent(true)` מגדיר את `isSent` ל-`true` ומעמיד בתור עיבוד חדש.
+3. React מעבד מחדש את הרכיב בהתאם לערך 'isSent' החדש.
 
-Let's take a closer look at the relationship between state and rendering.
+בואו נסתכל מקרוב על הקשר בין מצב לעיבוד.
 
-## Rendering takes a snapshot in time {/*rendering-takes-a-snapshot-in-time*/}
+## העיבוד מצלם תמונת מצב בזמן {/*העיבוד-לוקח-תמונת-מצב-בזמן*/}
 
-["Rendering"](/learn/render-and-commit#step-2-react-renders-your-components) means that React is calling your component, which is a function. The JSX you return from that function is like a snapshot of the UI in time. Its props, event handlers, and local variables were all calculated **using its state at the time of the render.**
+["עיבוד"](/learn/render-and-commit#step-2-react-renders-your-components) פירושו ש-React קורא לרכיב שלך, שהוא פונקציה. ה-JSX שאתה מחזיר מהפונקציה הזו הוא כמו תמונת מצב של ממשק המשתמש בזמן. הprops, מטפלי האירועים והמשתנים המקומיים חושבו כולם **באמצעות מצבו בזמן העיבוד.**
 
-Unlike a photograph or a movie frame, the UI "snapshot" you return is interactive. It includes logic like event handlers that specify what happens in response to inputs. React updates the screen to match this snapshot and connects the event handlers. As a result, pressing a button will trigger the click handler from your JSX.
+שלא כמו תמונה או פריים של סרט, "תמונת הstate" של ממשק המשתמש שאתה מחזיר הוא אינטראקטיבי. זה כולל לוגיקה כמו מטפלי אירועים שמציינים מה קורה בתגובה לקלט. React מעדכנת את המסך כך שיתאים לתמונת מצב זו ומחברת את מטפלי האירועים. כתוצאה מכך, לחיצה על כפתור תפעיל את מטפל הקליקים מה-JSX שלך.
 
-When React re-renders a component:
+כאשר React מעבד מחדש רכיב:
 
-1. React calls your function again.
-2. Your function returns a new JSX snapshot.
-3. React then updates the screen to match the snapshot your function returned.
+1. React קורא לפונקציה שלך שוב.
+2. הפונקציה שלך מחזירה תמונת מצב חדשה של JSX.
+3. React מעדכן את המסך כך שיתאים לתמונת הstate שהפונקציה שלך החזירה.
 
 <IllustrationBlock sequential>
     <Illustration caption="React executing the function" src="/images/docs/illustrations/i_render1.png" />
@@ -87,7 +87,7 @@ When React re-renders a component:
     <Illustration caption="Updating the DOM tree" src="/images/docs/illustrations/i_render3.png" />
 </IllustrationBlock>
 
-As a component's memory, state is not like a regular variable that disappears after your function returns. State actually "lives" in React itself--as if on a shelf!--outside of your function. When React calls your component, it gives you a snapshot of the state for that particular render. Your component returns a snapshot of the UI with a fresh set of props and event handlers in its JSX, all calculated **using the state values from that render!**
+כזיכרון של רכיב, מצב אינו כמו משתנה רגיל שנעלם לאחר החזרה של הפונקציה שלך. הstate למעשה "חיה" ב-React עצמה - כאילו על מדף! - מחוץ לתפקידך. כאשר React קורא לרכיב שלך, הוא נותן לך תמונת מצב של העיבוד המסוים הזה. הרכיב שלך מחזיר תמונת מצב של ממשק המשתמש עם קבוצה חדשה של props ומטפלי אירועים ב-JSX שלו, כולם מחושבים **באמצעות ערכי הstate מהעיבוד הזה!**
 
 <IllustrationBlock sequential>
   <Illustration caption="You tell React to update the state" src="/images/docs/illustrations/i_state-snapshot1.png" />
@@ -95,9 +95,9 @@ As a component's memory, state is not like a regular variable that disappears af
   <Illustration caption="React passes a snapshot of the state value into the component" src="/images/docs/illustrations/i_state-snapshot3.png" />
 </IllustrationBlock>
 
-Here's a little experiment to show you how this works. In this example, you might expect that clicking the "+3" button would increment the counter three times because it calls `setNumber(number + 1)` three times.
+הנה ניסוי קטן כדי להראות לך איך זה עובד. בדוגמה זו, אתה עשוי לצפות שלחיצה על כפתור "+3" תגדיל את המונה שלוש פעמים מכיוון שהוא קורא ל'setNumber(מספר + 1)' שלוש פעמים.
 
-See what happens when you click the "+3" button:
+ראה מה קורה כשאתה לוחץ על כפתור "+3":
 
 <Sandpack>
 
@@ -127,9 +127,9 @@ h1 { display: inline-block; margin: 10px; width: 30px; text-align: center; }
 
 </Sandpack>
 
-Notice that `number` only increments once per click!
+שימו לב ש'מספר' עולה רק פעם אחת בכל קליק!
 
-**Setting state only changes it for the *next* render.** During the first render, `number` was `0`. This is why, in *that render's* `onClick` handler, the value of `number` is still `0` even after `setNumber(number + 1)` was called:
+**מצב ההגדרה משנה את זה רק עבור העיבוד *הבא*.** במהלך העיבוד הראשון, 'מספר' היה '0'. זו הסיבה, במטפל `onClick` של *הרינדור הזה, הערך של `number` עדיין `0` גם לאחר שנקרא `setNumber(number + 1)`:
 
 ```js
 <button onClick={() => {
@@ -139,18 +139,18 @@ Notice that `number` only increments once per click!
 }}>+3</button>
 ```
 
-Here is what this button's click handler tells React to do:
+הנה מה שמטפל הלחיצה של הכפתור הזה אומר ל-React לעשות:
 
-1. `setNumber(number + 1)`: `number` is `0` so `setNumber(0 + 1)`.
-    - React prepares to change `number` to `1` on the next render.
-2. `setNumber(number + 1)`: `number` is `0` so `setNumber(0 + 1)`.
-    - React prepares to change `number` to `1` on the next render.
-3. `setNumber(number + 1)`: `number` is `0` so `setNumber(0 + 1)`.
-    - React prepares to change `number` to `1` on the next render.
+1. `setNumber(number + 1)`: `number` הוא `0` ולכן `setNumber(0 + 1)`.
+    - React מתכונן לשנות את 'מספר' ל-'1' בעיבוד הבא.
+2. `setNumber(number + 1)`: `number` הוא `0` ולכן `setNumber(0 + 1)`.
+    - React מתכונן לשנות את 'מספר' ל-'1' בעיבוד הבא.
+3. `setNumber(number + 1)`: `number` הוא `0` ולכן `setNumber(0 + 1)`.
+    - React מתכונן לשנות את 'מספר' ל-'1' בעיבוד הבא.
 
-Even though you called `setNumber(number + 1)` three times, in *this render's* event handler `number` is always `0`, so you set the state to `1` three times. This is why, after your event handler finishes, React re-renders the component with `number` equal to `1` rather than `3`.
+למרות שקראת 'setNumber(number + 1)' שלוש פעמים, במטפל האירועים של *העיבוד הזה* הוא תמיד '0', אז אתה מגדיר את הstate ל-'1' שלוש פעמים. זו הסיבה שאחרי שהמטפל באירועים שלך מסיים, React מעבד מחדש את הרכיב עם 'מספר' שווה ל-'1' במקום '3'.
 
-You can also visualize this by mentally substituting state variables with their values in your code. Since the `number` state variable is `0` for *this render*, its event handler looks like this:
+אתה יכול גם לדמיין זאת על ידי החלפה מנטלית של משתני מצב עם הערכים שלהם בקוד שלך. מכיוון שמשתנה הstate 'מספר' הוא '0' עבור *העיבוד הזה*, מטפל האירועים שלו נראה כך:
 
 ```js
 <button onClick={() => {
@@ -160,7 +160,7 @@ You can also visualize this by mentally substituting state variables with their 
 }}>+3</button>
 ```
 
-For the next render, `number` is `1`, so *that render's* click handler looks like this:
+עבור העיבוד הבא, `מספר` הוא `1`, כך שמטפל הקליקים של *העיבוד* הזה נראה כך:
 
 ```js
 <button onClick={() => {
@@ -170,11 +170,11 @@ For the next render, `number` is `1`, so *that render's* click handler looks lik
 }}>+3</button>
 ```
 
-This is why clicking the button again will set the counter to `2`, then to `3` on the next click, and so on.
+זו הסיבה שלחיצה נוספת על הכפתור תגדיר את המונה ל-'2', ואז ל-'3' בלחיצה הבאה, וכן הלאה.
 
-## State over time {/*state-over-time*/}
+## מצב לאורך זמן {/*מצב-על-זמן*/}
 
-Well, that was fun. Try to guess what clicking this button will alert:
+ובכן, זה היה כיף. נסה לנחש מה תתריע לחיצה על הכפתור הזה:
 
 <Sandpack>
 
@@ -203,14 +203,14 @@ h1 { display: inline-block; margin: 10px; width: 30px; text-align: center; }
 
 </Sandpack>
 
-If you use the substitution method from before, you can guess that the alert shows "0":
+אם אתה משתמש בשיטת ההחלפה מקודם, אתה יכול לנחש שההתראה מציגה "0":
 
 ```js
 setNumber(0 + 5);
 alert(0);
 ```
 
-But what if you put a timer on the alert, so it only fires _after_ the component re-rendered? Would it say "0" or "5"? Have a guess!
+אבל מה אם תכניס טיימר להתראה, אז הוא יופעל רק _לאחר_ שהרכיב יוצג מחדש? האם יהיה כתוב "0" או "5"? יש לנחש!
 
 <Sandpack>
 
@@ -241,7 +241,7 @@ h1 { display: inline-block; margin: 10px; width: 30px; text-align: center; }
 
 </Sandpack>
 
-Surprised? If you use the substitution method, you can see the "snapshot" of the state passed to the alert.
+מוּפתָע? אם אתה משתמש בשיטת ההחלפה, אתה יכול לראות את "תמונת הstate" של הstate שהועברה להתראה.
 
 ```js
 setNumber(0 + 5);
@@ -250,16 +250,16 @@ setTimeout(() => {
 }, 3000);
 ```
 
-The state stored in React may have changed by the time the alert runs, but it was scheduled using a snapshot of the state at the time the user interacted with it!
+ייתכן שstate המאוחסן ב-React השתנה עד למועד הפעלת ההתראה, אבל זה תוכנן באמצעות תמונת מצב של הstate בזמן שהמשתמש קיים איתו אינטראקציה!
 
-**A state variable's value never changes within a render,** even if its event handler's code is asynchronous. Inside *that render's* `onClick`, the value of `number` continues to be `0` even after `setNumber(number + 5)` was called. Its value was "fixed" when React "took the snapshot" of the UI by calling your component.
+**ערך של משתנה מצב לעולם לא משתנה בתוך רינדור,** גם אם הקוד של מטפל האירועים שלו הוא אסינכרוני. בתוך `onClick` של *העיבוד*, הערך של `number` ממשיך להיות `0` גם לאחר שנקרא `setNumber(number + 5)`. הערך שלו "תוקן" כאשר React "לקח את תמונת הstate" של ממשק המשתמש על ידי קריאה לרכיב שלך.
 
-Here is an example of how that makes your event handlers less prone to timing mistakes. Below is a form that sends a message with a five-second delay. Imagine this scenario:
+הנה דוגמה לאופן שבו זה גורם למטפלי האירועים שלך להיות פחות מועדים לטעויות תזמון. להלן טופס ששולח הודעה באיחור של חמש שניות. דמיינו את התרחיש הזה:
 
-1. You press the "Send" button, sending "Hello" to Alice.
-2. Before the five-second delay ends, you change the value of the "To" field to "Bob".
+1. אתה לוחץ על כפתור "שלח", שולח "שלום" לאליס.
+2. לפני שההשהייה של חמש שניות מסתיימת, אתה משנה את הערך של השדה "To" ל-"Bob".
 
-What do you expect the `alert` to display? Would it display, "You said Hello to Alice"? Or would it display, "You said Hello to Bob"? Make a guess based on what you know, and then try it:
+מה אתה מצפה שה'התראה' תציג? האם זה יציג, "אמרת שלום לאליס"? או שהוא יציג, "אמרת שלום לבוב"? עשה ניחוש על סמך מה שאתה יודע, ואז נסה את זה:
 
 <Sandpack>
 
@@ -305,19 +305,19 @@ label, textarea { margin-bottom: 10px; display: block; }
 
 </Sandpack>
 
-**React keeps the state values "fixed" within one render's event handlers.** You don't need to worry whether the state has changed while the code is running.
+**React שומר על ערכי הstate "קבועים" בתוך מטפלי האירועים של רינדור אחד.** אינך צריך לדאוג אם הstate השתנה בזמן שהקוד פועל.
 
-But what if you wanted to read the latest state before a re-render? You'll want to use a [state updater function](/learn/queueing-a-series-of-state-updates), covered on the next page!
+אבל מה אם תרצה לקרוא את הstate האחרון לפני עיבוד מחדש? תרצה להשתמש ב[פונקציית עדכון מצב](/learn/queueing-a-series-of-state-updates), המכוסה בעמוד הבא!
 
 <Recap>
 
-* Setting state requests a new render.
-* React stores state outside of your component, as if on a shelf.
-* When you call `useState`, React gives you a snapshot of the state *for that render*.
-* Variables and event handlers don't "survive" re-renders. Every render has its own event handlers.
-* Every render (and functions inside it) will always "see" the snapshot of the state that React gave to *that* render.
-* You can mentally substitute state in event handlers, similarly to how you think about the rendered JSX.
-* Event handlers created in the past have the state values from the render in which they were created.
+* הגדרת מצב מבקשת עיבוד חדש.
+* מצב חנויות React מחוץ לרכיב שלך, כאילו על מדף.
+* כאשר אתה קורא 'useState', React נותן לך תמונת מצב של הstate *עבור העיבוד הזה*.
+* משתנים ומטפלי אירועים אינם "שורדים" עיבוד מחדש. לכל עיבוד יש מטפלי אירועים משלו.
+* כל עיבוד (ומתפקד בתוכו) תמיד "יראה" את תמונת הstate של React נתנה לעיבוד *זה*.
+* אתה יכול להחליף מצב נפשית במטפלי אירועים, בדומה לאופן שבו אתה חושב על ה-JSX המעובד.
+* למטפלי אירועים שנוצרו בעבר יש את ערכי הstate מהעיבוד שבו הם נוצרו.
 
 </Recap>
 
@@ -325,9 +325,9 @@ But what if you wanted to read the latest state before a re-render? You'll want 
 
 <Challenges>
 
-#### Implement a traffic light {/*implement-a-traffic-light*/}
+#### יישם רמזור {/*יישם-רמזור*/}
 
-Here is a crosswalk light component that toggles when the button is pressed:
+להלן רכיב תאורה של מעבר חציה שמתחלף בעת לחיצה על הכפתור:
 
 <Sandpack>
 
@@ -362,13 +362,13 @@ h1 { margin-top: 20px; }
 
 </Sandpack>
 
-Add an `alert` to the click handler. When the light is green and says "Walk", clicking the button should say "Stop is next". When the light is red and says "Stop", clicking the button should say "Walk is next".
+הוסף 'התראה' למטפל בלחיצה. כאשר האור ירוק ואומר "הליכה", לחיצה על הכפתור אמורה לומר "עצירה היא הבאה". כאשר האור אדום ואומר "עצור", לחיצה על הכפתור אמורה לומר "הליכה היא הבאה".
 
-Does it make a difference whether you put the `alert` before or after the `setWalk` call?
+האם זה משנה אם אתה שם את 'התראה' לפני או אחרי שיחת 'setWalk'?
 
 <Solution>
 
-Your `alert` should look like this:
+ה'התראה' שלך צריכה להיראות כך:
 
 <Sandpack>
 
@@ -404,17 +404,17 @@ h1 { margin-top: 20px; }
 
 </Sandpack>
 
-Whether you put it before or after the `setWalk` call makes no difference. That render's value of `walk` is fixed. Calling `setWalk` will only change it for the *next* render, but will not affect the event handler from the previous render.
+אם אתה שם את זה לפני או אחרי שיחת `setWalk` לא משנה. הערך 'הליכה' של העיבוד הזה קבוע. קריאה ל-'setWalk' תשנה אותו רק עבור העיבוד *הבא*, אבל לא תשפיע על מטפל האירועים מהעיבוד הקודם.
 
-This line might seem counter-intuitive at first:
+השורה הזו עשויה להיראות מנוגדת לאינטואיציה בהתחלה:
 
 ```js
 alert(walk ? 'Stop is next' : 'Walk is next');
 ```
 
-But it makes sense if you read it as: "If the traffic light shows 'Walk now', the message should say 'Stop is next.'" The `walk` variable inside your event handler matches that render's value of `walk` and does not change.
+אבל זה הגיוני אם אתה קורא את זה כך: "אם הרמזור מראה 'ללכת עכשיו', ההודעה אמורה לומר 'העצור זה הבא'." המשתנה 'הליכה' בתוך מטפל האירועים שלך תואם את הערך של העיבוד הזה של 'הליכה' ואינו משתנה.
 
-You can verify that this is correct by applying the substitution method. When `walk` is `true`, you get:
+אתה יכול לוודא שזה נכון על ידי יישום שיטת ההחלפה. כאשר 'הליכה' הוא 'נכון', אתה מקבל:
 
 ```js
 <button onClick={() => {
@@ -428,8 +428,9 @@ You can verify that this is correct by applying the substitution method. When `w
 </h1>
 ```
 
-So clicking "Change to Stop" queues a render with `walk` set to `false`, and alerts "Stop is next".
+אז לחיצה על "שנה לעצירה" מעמידה בתור עיבוד עם 'הליכה' מוגדרת ל'שקר', ומתריעה על "העצירה היא הבאה".
 
 </Solution>
 
 </Challenges>
+

@@ -5,13 +5,13 @@ canary: true
 
 <Canary>
 
-The `preconnect` function is currently only available in React's Canary and experimental channels. Learn more about [React's release channels here](/community/versioning-policy#all-release-channels).
+הפונקציה `preconnect` זמינה כרגע רק בערוצי Canary ו-experimental של React. מידע נוסף ב-[ערוצי השחרור של React](/community/versioning-policy#all-release-channels).
 
 </Canary>
 
 <Intro>
 
-`preconnect` lets you eagerly connect to a server that you expect to load resources from.
+`preconnect` מאפשרת להתחבר מראש לשרת שאתם מצפים לטעון ממנו משאבים.
 
 ```js
 preconnect("https://example.com");
@@ -27,7 +27,7 @@ preconnect("https://example.com");
 
 ### `preconnect(href)` {/*preconnect*/}
 
-To preconnect to a host, call the `preconnect` function from `react-dom`.
+כדי לבצע preconnect ל-host, קראו לפונקציה `preconnect` מתוך `react-dom`.
 
 ```js
 import { preconnect } from 'react-dom';
@@ -39,34 +39,34 @@ function AppRoot() {
 
 ```
 
-[See more examples below.](#usage)
+[ראו דוגמאות נוספות בהמשך.](#usage)
 
-The `preconnect` function provides the browser with a hint that it should open a connection to the given server. If the browser chooses to do so, this can speed up the loading of resources from that server. 
+הפונקציה `preconnect` מספקת לדפדפן רמז שכדאי לפתוח חיבור לשרת הנתון. אם הדפדפן בוחר לעשות זאת, זה יכול להאיץ טעינה של משאבים מהשרת הזה.
 
 #### Parameters {/*parameters*/}
 
-* `href`: a string. The URL of the server you want to connect to.
+* `href`: מחרוזת. ה-URL של השרת שאליו רוצים להתחבר.
 
 
 #### Returns {/*returns*/}
 
-`preconnect` returns nothing.
+`preconnect` לא מחזירה דבר.
 
 #### Caveats {/*caveats*/}
 
-* Multiple calls to `preconnect` with the same server have the same effect as a single call.
-* In the browser, you can call `preconnect` in any situation: while rendering a component, in an effect, in an event handler, and so on.
-* In server-side rendering or when rendering Server Components, `preconnect` only has an effect if you call it while rendering a component or in an async context originating from rendering a component. Any other calls will be ignored.
-* If you know the specific resources you'll need, you can call [other functions](/reference/react-dom/#resource-preloading-apis) instead that will start loading the resources right away.
-* There is no benefit to preconnecting to the same server the webpage itself is hosted from because it's already been connected to by the time the hint would be given.
+* כמה קריאות ל-`preconnect` עם אותו שרת משפיעות כמו קריאה אחת.
+* בדפדפן אפשר לקרוא ל-`preconnect` בכל מצב: בזמן רינדור קומפוננטה, בתוך effect, בתוך event handler, וכן הלאה.
+* ברינדור צד שרת או ברינדור Server Components, ל-`preconnect` יש השפעה רק אם קוראים לה בזמן רינדור קומפוננטה או בהקשר async שמקורו ברינדור קומפוננטה. קריאות אחרות ייחסמו.
+* אם אתם יודעים אילו משאבים ספציפיים תצטרכו, אפשר לקרוא [לפונקציות אחרות](/reference/react-dom/#resource-preloading-apis) שמתחילות לטעון את המשאבים מיד.
+* אין תועלת ב-preconnect לאותו שרת שעליו מתארח דף הווב עצמו, כי החיבור אליו כבר פתוח עד לרגע שבו היה ניתן הרמז.
 
 ---
 
-## Usage {/*usage*/}
+## שימוש {/*usage*/}
 
-### Preconnecting when rendering {/*preconnecting-when-rendering*/}
+### Preconnect בזמן רינדור {/*preconnecting-when-rendering*/}
 
-Call `preconnect` when rendering a component if you know that its children will load external resources from that host.
+קראו ל-`preconnect` בזמן רינדור קומפוננטה אם אתם יודעים שהילדים שלה יטענו משאבים חיצוניים מאותו host.
 
 ```js
 import { preconnect } from 'react-dom';
@@ -77,9 +77,9 @@ function AppRoot() {
 }
 ```
 
-### Preconnecting in an event handler {/*preconnecting-in-an-event-handler*/}
+### Preconnect בתוך event handler {/*preconnecting-in-an-event-handler*/}
 
-Call `preconnect` in an event handler before transitioning to a page or state where external resources will be needed. This gets the process started earlier than if you call it during the rendering of the new page or state.
+קראו ל-`preconnect` בתוך event handler לפני מעבר לעמוד או מצב שבהם יידרשו משאבים חיצוניים. כך התהליך מתחיל מוקדם יותר לעומת קריאה בזמן רינדור העמוד או המצב החדש.
 
 ```js
 import { preconnect } from 'react-dom';

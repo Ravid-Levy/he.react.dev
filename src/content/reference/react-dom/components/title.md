@@ -5,14 +5,14 @@ canary: true
 
 <Canary>
 
-React's extensions to `<title>` are currently only available in React's canary and experimental channels. In stable releases of React `<title>` works only as a [built-in browser HTML component](https://react.dev/reference/react-dom/components#all-html-components). Learn more about [React's release channels here](/community/versioning-policy#all-release-channels).
+ההרחבות של React ל-`<title>` זמינות כרגע רק בערוצי canary ו-experimental של React. בגרסאות יציבות של React, `<title>` פועל רק כ-[רכיב HTML מובנה של הדפדפן](https://react.dev/reference/react-dom/components#all-html-components). מידע נוסף ב-[ערוצי השחרור של React](/community/versioning-policy#all-release-channels).
 
 </Canary>
 
 
 <Intro>
 
-The [built-in browser `<title>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title) lets you specify the title of the document.
+רכיב הדפדפן המובנה [`<title>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title) מאפשר לקבוע את כותרת המסמך.
 
 ```js
 <title>My Blog</title>
@@ -28,41 +28,41 @@ The [built-in browser `<title>` component](https://developer.mozilla.org/en-US/d
 
 ### `<title>` {/*title*/}
 
-To specify the title of the document, render the [built-in browser `<title>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title). You can render `<title>` from any component and React will always place the corresponding DOM element in the document head.
+כדי לקבוע את כותרת המסמך, רנדרו את רכיב הדפדפן המובנה [`<title>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title). אפשר לרנדר `<title>` מכל קומפוננטה ו-React תמיד תמקם את אלמנט ה-DOM המתאים בתוך ה-document head.
 
 ```js
 <title>My Blog</title>
 ```
 
-[See more examples below.](#usage)
+[ראו דוגמאות נוספות בהמשך.](#usage)
 
 #### Props {/*props*/}
 
-`<title>` supports all [common element props.](/reference/react-dom/components/common#props)
+`<title>` תומך בכל [מאפייני האלמנט הנפוצים.](/reference/react-dom/components/common#props)
 
-* `children`: `<title>` accepts only text as a child. This text will become the title of the document. You can also pass your own components as long as they only render text.
+* `children`: רכיב `<title>` מקבל רק טקסט כ-child. הטקסט הזה יהפוך לכותרת המסמך. אפשר גם להעביר קומפוננטות משלכם כל עוד הן מרנדרות רק טקסט.
 
-#### Special rendering behavior {/*special-rendering-behavior*/}
+#### התנהגות רינדור מיוחדת {/*special-rendering-behavior*/}
 
-React will always place the DOM element corresponding to the `<title>` component within the document’s `<head>`, regardless of where in the React tree it is rendered. The `<head>` is the only valid place for `<title>` to exist within the DOM, yet it’s convenient and keeps things composable if a component representing a specific page can render its `<title>` itself. 
+React תמיד תמקם את אלמנט ה-DOM המתאים ל-`<title>` בתוך `<head>` של המסמך, בלי קשר למקום שבו הוא מרונדר בעץ React. `<head>` הוא המקום החוקי היחיד ל-`<title>` בתוך ה-DOM, ובכל זאת זה נוח ושומר על קומפוזביליות אם קומפוננטה שמייצגת עמוד מסוים יכולה לרנדר בעצמה את `<title>` שלה.
 
-There are two exception to this:
-* If `<title>` is within an `<svg>` component, then there is no special behavior, because in this context it doesn’t represent the document’s title but rather is an [accessibility annotation for that SVG graphic](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title).
-* If the `<title>` has an [`itemProp`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/itemprop) prop, there is no special behavior, because in this case it doesn’t represent the document’s title but rather metadata about a specific part of the page. 
+יש שני חריגים לכך:
+* אם `<title>` נמצא בתוך רכיב `<svg>`, אין התנהגות מיוחדת, כי בהקשר הזה הוא לא מייצג את כותרת המסמך אלא [הערת נגישות לגרפיקת ה-SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title).
+* אם ל-`<title>` יש prop מסוג [`itemProp`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/itemprop), אין התנהגות מיוחדת, כי במקרה הזה הוא לא מייצג את כותרת המסמך אלא metadata על חלק מסוים בעמוד.
 
 <Pitfall>
 
-Only render a single `<title>` at a time. If more than one component renders a `<title>` tag at the same time, React will place all of those titles in the document head. When this happens, the behavior of browsers and search engines is undefined.
+רנדרו רק `<title>` יחיד בכל רגע. אם יותר מקומפוננטה אחת מרנדרת תגית `<title>` באותו זמן, React תמקם את כל הכותרות האלה בתוך head של המסמך. במצב כזה ההתנהגות של דפדפנים ומנועי חיפוש אינה מוגדרת.
 
 </Pitfall>
 
 ---
 
-## Usage {/*usage*/}
+## שימוש {/*usage*/}
 
-### Set the document title {/*set-the-document-title*/}
+### הגדרת כותרת המסמך {/*set-the-document-title*/}
 
-Render the `<title>` component from any component with text as its children. React will put a `<title>` DOM node in the document `<head>`.
+רנדרו את רכיב `<title>` מכל קומפוננטה עם טקסט כ-children שלו. React תשים DOM node של `<title>` בתוך `<head>` של המסמך.
 
 <SandpackWithHTMLOutput>
 
@@ -82,17 +82,16 @@ export default function ContactUsPage() {
 
 </SandpackWithHTMLOutput>
 
-### Use variables in the title {/*use-variables-in-the-title*/}
+### שימוש במשתנים בתוך הכותרת {/*use-variables-in-the-title*/}
 
-The children of the `<title>` component must be a single string of text. (Or a single number or a single object with a `toString` method.) It might not be obvious, but using JSX curly braces like this:
+ה-children של רכיב `<title>` חייבים להיות מחרוזת טקסט יחידה. (או מספר יחיד, או אובייקט יחיד עם מתודת `toString`.) זה עלול להיות לא ברור, אבל שימוש בסוגריים מסולסלים של JSX כך:
 
 ```js
 <title>Results page {pageNumber}</title> // 🔴 Problem: This is not a single string
 ```
 
-... actually causes the `<title>` component to get a two-element array as its children (the string `"Results page"` and the value of `pageNumber`). This will cause an error. Instead, use string interpolation to pass `<title>` a single string:
+... בעצם גורם לרכיב `<title>` לקבל מערך של שני אלמנטים כ-children (המחרוזת `"Results page"` והערך של `pageNumber`). זה יגרום לשגיאה. במקום זאת, השתמשו ב-string interpolation כדי להעביר ל-`<title>` מחרוזת יחידה:
 
 ```js
 <title>{`Results page ${pageNumber}`}</title>
 ```
-
