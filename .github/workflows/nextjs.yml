@@ -51,6 +51,20 @@ jobs:
       - name: Build site
         run: yarn build
 
+      - name: Patch encoded dynamic chunk filename for GitHub Pages
+        run: |
+          set -e
+          PAGES_CHUNKS_DIR="out/_next/static/chunks/pages"
+          if [ -d "$PAGES_CHUNKS_DIR" ]; then
+            for f in "$PAGES_CHUNKS_DIR"/\[\[...markdownPath\]\]-*.js; do
+              if [ -f "$f" ]; then
+                base="$(basename "$f")"
+                encoded="${base//\[\[...markdownPath\]\]/%5B%5B...markdownPath%5D%5D}"
+                cp "$f" "$PAGES_CHUNKS_DIR/$encoded"
+              fi
+            done
+          fi
+
       - name: Verify output folder
         run: |
           ls -la
