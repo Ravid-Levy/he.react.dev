@@ -632,39 +632,41 @@ function CTA({children, icon, href}) {
   );
 }
 
-const reactConf2021Cover = '/images/home/conf2021/cover.svg';
-const reactConf2019Cover = '/images/home/conf2019/cover.svg';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+const reactConf2021Cover = basePath + '/images/home/conf2021/cover.svg';
+const reactConf2019Cover = basePath + '/images/home/conf2019/cover.svg';
 const communityImages = [
   {
-    src: '/images/home/community/react_conf_fun.webp',
+    src: basePath + '/images/home/community/react_conf_fun.webp',
     alt: 'אנשים שרים קריוקי ב-React Conf',
   },
   {
-    src: '/images/home/community/react_india_sunil.webp',
+    src: basePath + '/images/home/community/react_india_sunil.webp',
     alt: 'Sunil Pai מרצה ב-React India',
   },
   {
-    src: '/images/home/community/react_conf_hallway.webp',
+    src: basePath + '/images/home/community/react_conf_hallway.webp',
     alt: 'שיחת מסדרון בין שני אנשים ב-React Conf',
   },
   {
-    src: '/images/home/community/react_india_hallway.webp',
+    src: basePath + '/images/home/community/react_india_hallway.webp',
     alt: 'שיחת מסדרון ב-React India',
   },
   {
-    src: '/images/home/community/react_conf_elizabet.webp',
+    src: basePath + '/images/home/community/react_conf_elizabet.webp',
     alt: 'Elizabet Oliveira מרצה ב-React Conf',
   },
   {
-    src: '/images/home/community/react_india_selfie.webp',
+    src: basePath + '/images/home/community/react_india_selfie.webp',
     alt: 'אנשים מצלמים סלפי קבוצתי ב-React India',
   },
   {
-    src: '/images/home/community/react_conf_nat.webp',
+    src: basePath + '/images/home/community/react_conf_nat.webp',
     alt: 'Nat Alison מרצה ב-React Conf',
   },
   {
-    src: '/images/home/community/react_india_team.webp',
+    src: basePath + '/images/home/community/react_india_team.webp',
     alt: 'מארגנים שמברכים את המשתתפים ב-React India',
   },
 ];
@@ -1000,35 +1002,35 @@ function Example3() {
       id: 'vids-0',
       title: 'React: The Documentary',
       description: 'סיפור המקור של React',
-      image: '/images/home/videos/documentary.webp',
+      image: basePath + '/images/home/videos/documentary.webp',
       url: 'https://www.youtube.com/watch?v=8pDqJVdNa44',
     },
     {
       id: 'vids-1',
       title: 'Rethinking Best Practices',
       description: 'Pete Hunt (2013)',
-      image: '/images/home/videos/rethinking.jpg',
+      image: basePath + '/images/home/videos/rethinking.jpg',
       url: 'https://www.youtube.com/watch?v=x7cQ3mrcKaY',
     },
     {
       id: 'vids-2',
       title: 'Introducing React Native',
       description: 'Tom Occhino (2015)',
-      image: '/images/home/videos/rn.jpg',
+      image: basePath + '/images/home/videos/rn.jpg',
       url: 'https://www.youtube.com/watch?v=KVZ-P-ZI6W4',
     },
     {
       id: 'vids-3',
       title: 'Introducing React Hooks',
       description: 'Sophie Alpert and Dan Abramov (2018)',
-      image: '/images/home/videos/hooks.jpg',
+      image: basePath + '/images/home/videos/hooks.jpg',
       url: 'https://www.youtube.com/watch?v=V-QO-KO90iQ',
     },
     {
       id: 'vids-4',
       title: 'היכרות עם Server Components',
       description: 'Dan Abramov and Lauren Tan (2020)',
-      image: '/images/home/videos/rsc.jpg',
+      image: basePath + '/images/home/videos/rsc.jpg',
       url: 'https://www.youtube.com/watch?v=TQQPAU21ZUw',
     },
   ];
@@ -2381,10 +2383,10 @@ function fetchTalks(confId) {
             url: 'https://www.youtube.com/watch?v=FZ0cG47msEk&list=PLNG_1j3cPCaZZ7etkzWA7JfdmKWT0pMsa&index=1',
             image: {
               speakers: [
-                '/images/home/conf2021/andrew.jpg',
-                '/images/home/conf2021/lauren.jpg',
-                '/images/home/conf2021/juan.jpg',
-                '/images/home/conf2021/rick.jpg',
+                basePath + '/images/home/conf2021/andrew.jpg',
+                basePath + '/images/home/conf2021/lauren.jpg',
+                basePath + '/images/home/conf2021/juan.jpg',
+                basePath + '/images/home/conf2021/rick.jpg',
               ],
             },
           },
@@ -2394,7 +2396,7 @@ function fetchTalks(confId) {
             description: 'Shruti Kapoor',
             url: 'https://www.youtube.com/watch?v=ytudH8je5ko&list=PLNG_1j3cPCaZZ7etkzWA7JfdmKWT0pMsa&index=2',
             image: {
-              speakers: ['/images/home/conf2021/shruti.jpg'],
+              speakers: [basePath + '/images/home/conf2021/shruti.jpg'],
             },
           },
           {
@@ -2403,7 +2405,7 @@ function fetchTalks(confId) {
             description: 'Shaundai Person',
             url: 'https://www.youtube.com/watch?v=pj5N-Khihgc&list=PLNG_1j3cPCaZZ7etkzWA7JfdmKWT0pMsa&index=3',
             image: {
-              speakers: ['/images/home/conf2021/shaundai.jpg'],
+              speakers: [basePath + '/images/home/conf2021/shaundai.jpg'],
             },
           },
           {

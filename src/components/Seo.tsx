@@ -39,7 +39,7 @@ export const Seo = withRouter(
   ({
     title,
     titleForTitleTag,
-    image = '/images/og-default.png',
+    image = (process.env.NEXT_PUBLIC_BASE_PATH || '') + '/images/og-default.png',
     router,
     children,
     isHomePage,
