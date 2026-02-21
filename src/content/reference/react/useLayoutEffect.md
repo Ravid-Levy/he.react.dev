@@ -107,7 +107,7 @@ function Tooltip() {
 4. `Tooltip` מעבד שוב עם ה-`tooltipHeight` האמיתי (כך שהסבר הכלי ממוקם נכון).
 5. React מעדכן אותו ב-DOM, והדפדפן מציג לבסוף את הסבר הכלי.
 
-Hover over the buttons below and see how the tooltip adjusts its position depending on whether it fits:
+רחפו מעל הכפתורים למטה וראו איך ה-tooltip מתאים את המיקום שלו לפי המקום הזמין:
 
 <Sandpack>
 
